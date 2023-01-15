@@ -12,16 +12,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AdsRegisterPage extends GetView<AdsRegisterController> {
   const AdsRegisterPage({super.key});
-
   refresh() {
     controller.categoryId.value = 0;
     controller.cityId.value = 0;
-    controller.adsTitle.clear();
-    controller.adsDescription.clear();
-    controller.adsPrice.clear();
-    controller.adsOwnerName.clear();
-    controller.adsOwnerPhone.clear();
-    controller.adsOwnerAddress.clear();
+    controller.adsTitle.value = '';
+    controller.adsDescription.value = '';
+    controller.adsPrice.value = '0';
+    controller.adsOwnerName.value = '';
+    controller.adsOwnerPhone.value = '';
+    controller.adsOwnerAddress.value = '';
+    controller.imagePath.value = '';
   }
 
   @override
@@ -29,8 +29,9 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('ثبت آگهی'),
-        
+        title: Text(
+          Get.arguments?[0] != 'edit' ? 'ثبت آگهی' : 'ویرایش آگهی',
+        ),
         leading: GestureDetector(
           onTap: () {
             Get.find<DashbordController>().tabIndex.value = 0;
@@ -62,11 +63,6 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                   seconds: 1,
                 ),
               )
-            // const LinearProgressIndicator(
-            //     backgroundColor: Color.fromRGBO(196, 33, 39, 0.4),
-            //     color: Color(0xffC42127),
-            //   )
-
             : SingleChildScrollView(
                 child: Center(
                   child: Padding(
@@ -77,11 +73,7 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                       children: [
                         ListTile(
                           contentPadding: const EdgeInsets.all(0),
-
                           title: const Text('دسته بندی'),
-                          // leading: Icon(
-                          //   icon,
-                          // ),
                           trailing: Obx(
                             () => Text(
                               controller.categoryId.value == 0
@@ -99,11 +91,7 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                         divider(),
                         ListTile(
                           contentPadding: const EdgeInsets.all(0),
-
                           title: const Text('انتخاب شهر'),
-                          // leading: Icon(
-                          //   icon,
-                          // ),
                           trailing: Obx(
                             () => Text(
                               controller.cityId.value == 0
@@ -115,20 +103,24 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                             ),
                           ),
                           onTap: () {
-                            Get.to(const SelectStatePage());
+                            Get.to(
+                              const SelectStatePage(),
+                              // arguments: 2,
+                            );
                           },
                         ),
                         divider(),
-
                         reqInfo('عنوان آگهی'),
                         reqInfoDescrieption(
                           'در عنوان آگهی به موارد مهم و چشمگیر اشاره کنید.',
                         ),
-                        TextField(
-                          controller: controller.adsTitle,
+                        TextFormField(
+                          initialValue: controller.adsTitle.value,
                           style: const TextStyle(fontSize: 20),
                           cursorColor: const Color(0xffC42127),
-                         
+                          onChanged: (String value) {
+                            controller.adsTitle.value = value;
+                          },
                         ),
                         reqInfo('عکس آگهی'),
                         reqInfoDescrieption(
@@ -197,7 +189,7 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                                               onTap: () {
                                                 controller.getImage(
                                                     ImageSource.gallery);
-                                                Get.back();
+                                                // Get.back();
                                                 Get.back();
                                               },
                                             ),
@@ -240,8 +232,12 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                         reqInfoDescrieption(
                           'جزئیات و نکات جالب توجه آگهی خود را کامل و دقیق بنویسید. حتما به ساعت پاسخگویی خود اشاره کنید.',
                         ),
-                        TextField(
-                          controller: controller.adsDescription,
+                        TextFormField(
+                          initialValue: removeAllHtmlTags(
+                              controller.adsDescription.value),
+                          onChanged: (String value) {
+                            controller.adsDescription.value = value;
+                          },
                           textAlign: TextAlign.justify,
                           style: const TextStyle(fontSize: 20),
                           cursorColor: const Color(0xffC42127),
@@ -252,8 +248,10 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                         reqInfoDescrieption(
                           'اگر قیمت آگهی شما توافقی است این فیلد را پر نکنید.',
                         ),
-                        TextField(
-                          controller: controller.adsPrice,
+                        TextFormField(
+                          initialValue: controller.adsPrice.value == '0'
+                              ? 'توافقی'
+                              : controller.adsPrice.value,
                           keyboardType: TextInputType.number,
                           style: const TextStyle(fontSize: 20),
                           decoration: const InputDecoration(
@@ -262,49 +260,51 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                           cursorColor: const Color(0xffC42127),
                           minLines: null,
                           maxLines: null,
+                          onChanged: (String value) {
+                            controller.adsPrice.value = value;
+                          },
                         ),
                         reqInfo('اطلاعات فروشنده'),
                         divider(),
                         sellerInfo(
                           'نام',
-                          controller.adsOwnerName,
+                          controller.adsOwnerName.value,
                           TextInputType.name,
+                          (String value) {
+                            controller.adsOwnerName.value = value;
+                          },
                         ),
                         sellerInfo(
                           'شماره تلفن',
-                          controller.adsOwnerPhone,
+                          controller.adsOwnerPhone.value,
                           TextInputType.phone,
+                          (String value) {
+                            controller.adsOwnerPhone.value = value;
+                          },
                         ),
-                        // sellerInfo('ایمیل',),
+                        sellerInfo(
+                          'ایمیل',
+                          controller.adsOwnerEmail.value,
+                          TextInputType.phone,
+                          (String value) {
+                            controller.adsOwnerEmail.value = value;
+                          },
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: TextField(
-                            controller: controller.adsOwnerAddress,
-                            // style: const TextStyle(fontSize: 20),
+                          child: TextFormField(
+                            initialValue: controller.adsOwnerAddress.value,
                             cursorColor: const Color(0xffC42127),
                             decoration: const InputDecoration(
                               hintText: 'آدرس',
                             ),
                             minLines: 3,
                             maxLines: 10,
+                            onChanged: (String value) {
+                              controller.adsOwnerAddress.value = value;
+                            },
                           ),
                         ),
-
-                        // reqInfo('آگهی خود را ویژه کنید'),
-                        // reqInfoDescrieption(
-                        //   'با ثبت آگهی ستاره دار شانس دیده شدن آگهی خود را چند برار کنید.',
-                        // ),
-                        // divider(),
-                        // plans(0),
-                        // plans(1),
-                        // plans(2),
-                        // plans(3),
-                        // plans(4),
-                        // plans(5),
-                        // plans(6),
-                        // plans(7),
-                        // plans(8),
-
                         ExpansionTile(
                           title: ListTile(
                             title: reqInfo('آگهی خود را ویژه کنید'),
@@ -325,7 +325,6 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                             plans(8),
                           ],
                         ),
-
                         Container(
                           margin: const EdgeInsets.only(bottom: 10, top: 10),
                           width: Get.width,
@@ -336,11 +335,16 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                               elevation: 0,
                             ),
                             onPressed: () {
-                              controller.registrAds();
+                              Get.arguments?[0] != 'edit'
+                                  ? controller.registrAds()
+                                  : controller.updateMyAds(
+                                      int.parse(controller.adsId.value));
                             },
-                            child: const Text(
-                              'ثبت آگهی',
-                              style: TextStyle(
+                            child: Text(
+                              controller.editeMode.value != 'edit'
+                                  ? 'ثبت آگهی'
+                                  : 'ویرایش آگهی',
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -397,17 +401,18 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
     );
   }
 
-  Padding sellerInfo(String title, controller, keyboardType) {
+  Padding sellerInfo(String title, String initialValue,
+      TextInputType keyboardType, Function(String) onChanged) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: TextField(
-        controller: controller,
-        keyboardType: keyboardType,
-        cursorColor: primaryColor,
-        decoration: InputDecoration(
-          hintText: title,
-        ),
-      ),
+      child: TextFormField(
+          initialValue: initialValue,
+          keyboardType: keyboardType,
+          cursorColor: primaryColor,
+          decoration: InputDecoration(
+            hintText: title,
+          ),
+          onChanged: onChanged),
     );
   }
 
@@ -433,6 +438,4 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
       color: Colors.grey.shade300,
     );
   }
-
-  
 }

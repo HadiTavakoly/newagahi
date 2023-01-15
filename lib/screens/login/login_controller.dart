@@ -1,10 +1,9 @@
-import 'package:get_storage/get_storage.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:newagahi/models/auth_model.dart';
-import 'package:newagahi/screens/splash/auth_controller.dart';
+import 'package:newagahi/screens/dashbord/auth_controller.dart';
 
 class LoginController extends GetxController with CacheManager {
   Auth? stateData;
@@ -15,7 +14,6 @@ class LoginController extends GetxController with CacheManager {
   var visible = false.obs;
 
   Future<void> loginWithEmail() async {
-    // var headers = {'Content-Type': 'application/json'};
     try {
       var response = await http.post(
         Uri.https(
@@ -36,7 +34,6 @@ class LoginController extends GetxController with CacheManager {
           var tel = stateData!.data![0].tel;
           await saveToken(token);
           await saveTel(tel);
-
           usernameController.clear();
           passwordController.clear();
           Get.find<AuthController>().login(
@@ -50,8 +47,6 @@ class LoginController extends GetxController with CacheManager {
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
       }
     } catch (error) {
-      // Get.back();
-      // message.value = error.toString();
       Get.snackbar(
         '',
         '',
@@ -71,17 +66,6 @@ class LoginController extends GetxController with CacheManager {
           ),
         ),
       );
-      // showDialog(
-      //   context: Get.context!,
-      //   builder: (context) {
-      //     return SimpleDialog(
-      //       title: Text('خطا'),
-      //       contentPadding: EdgeInsets.all(20),
-      //       children: [Text(error.toString())],
-      //     );
-      //   },
-      // );
     }
   }
 }
-

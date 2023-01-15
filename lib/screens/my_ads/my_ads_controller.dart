@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:newagahi/screens/splash/auth_controller.dart';
+import 'package:newagahi/screens/dashbord/auth_controller.dart';
 import '../../models/ads_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -21,9 +21,12 @@ class MyAdsController extends GetxController {
     try {
       isDataLoading(true);
       var respons = await http.get(
-        Uri.https('newagahi.ir', 'api/v1/panel/my-ads', queryParameters),
+        Uri.https(
+          'newagahi.ir',
+          'api/v1/panel/my-ads',
+          queryParameters,
+        ),
       );
-
       if (respons.statusCode == 200) {
         myAdsData = Ads.fromJson(jsonDecode(respons.body));
       } else {
@@ -31,7 +34,7 @@ class MyAdsController extends GetxController {
         throw Exception('Fail to load my ads');
       }
     } catch (e) {
-      throw Exception('Fail to load my ads');
+      throw Exception('Error : $e');
     } finally {
       isDataLoading(false);
     }

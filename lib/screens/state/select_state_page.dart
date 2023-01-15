@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/city/select_city_page.dart';
 import 'state_controller.dart';
 import '../../bindings/my_binding.dart';
@@ -15,14 +16,15 @@ class SelectStatePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'انتخاب استان',
+          // Get.arguments.toString(),
         ),
       ),
       body: Center(
         child: Obx(() => Get.find<StateController>().isDataLoading.value
-            ? const SpinKitThreeBounce(
+            ?  SpinKitThreeBounce(
                 size: 25,
-                color: Color(0xffC42127),
-                duration: Duration(
+                color: primaryColor,
+                duration: const Duration(
                   seconds: 1,
                 ),
               )
@@ -37,10 +39,6 @@ class SelectStatePage extends StatelessWidget {
                       //             .data![index]
                       //             .id ??
                       //         0;
-                      print(Get.find<StateController>()
-                          .stateData!
-                          .data![index]
-                          .id);
                       Get.to(
                         () => const SelectCityPage(),
                         arguments: Get.find<StateController>()
@@ -76,25 +74,7 @@ class SelectStatePage extends StatelessWidget {
                 },
               )),
       ),
-      // bottomNavigationBar: Container(
-      //   color: Colors.grey[100],
-      //   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      //   height: Get.height / 12,
-      //   child: ElevatedButton(
-      //     style: ElevatedButton.styleFrom(
-      //       backgroundColor: const Color(0xffC42127),
-      //       elevation: 0,
-      //     ),
-      //     onPressed: () {},
-      //     child: const Text(
-      //       'تایید',
-      //       style: TextStyle(
-      //         fontSize: 20,
-      //         fontWeight: FontWeight.bold,
-      //       ),
-      //     ),
-      //   ),
-      // ),
+      
     );
   }
 }

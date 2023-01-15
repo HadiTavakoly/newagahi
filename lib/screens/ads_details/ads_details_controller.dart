@@ -14,16 +14,6 @@ class AdsDetailsController extends GetxController {
     getAdsDetails(id);
   }
 
-  @override
-  Future<void> onReady() async {
-    super.onReady();
-  }
-
-  @override
-  void onClose() async {
-    super.onClose();
-  }
-
   getAdsDetails(int id) async {
     try {
       isDataLoading(true);
@@ -36,14 +26,12 @@ class AdsDetailsController extends GetxController {
 
       if (respons.statusCode == 200) {
         adsDetailsData = Ads.fromJson(jsonDecode(respons.body));
-        // FlutterNativeSplash.remove();
-
       } else {
         isDataLoading(false);
-        throw Exception('Fail to load last ads details');
+        throw Exception('Fail to load ads details');
       }
     } catch (e) {
-      throw Exception('Fail to load last ads details $e');
+      throw Exception('Error : $e');
     } finally {
       isDataLoading(false);
     }

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:newagahi/bindings/my_binding.dart';
+import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
 import 'package:newagahi/screens/my_ads/my_ads_page.dart';
-import 'package:newagahi/screens/profile/profile_controller.dart';
-import '../splash/auth_controller.dart';
+import '../../constans.dart';
+import '../dashbord/auth_controller.dart';
 import '../login/login_page.dart';
-import '../login/login_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-// https://newagahi.ir/pages?page=%D9%82%D9%88%D8%A7%D9%86%DB%8C%D9%86
 
   Future<void> _launchUrl(url) async {
     if (!await launchUrl(
       url,
       mode: LaunchMode.platformDefault,
-      // webViewConfiguration: const WebViewConfiguration(enableJavaScript: false),
     )) {
       throw 'Could not launch $url';
     }
@@ -38,13 +37,19 @@ class ProfilePage extends StatelessWidget {
             Obx(
               () => Get.find<AuthController>().isLogged.value
                   ? Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         cell(
                           'آگهی های من',
                           Icons.person,
-                          () {
-                            Get.to(
-                              () => MyAdsPage(),
+                          () async {
+                            await Get.to(
+                              () => const MyAdsPage(),
+                              binding: MyBinding(),
+                            );
+                            Get.put<AdsRegisterController>(
+                              AdsRegisterController(),
                             );
                           },
                         ),
@@ -262,7 +267,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Get.to(LoginPage());
+                    Get.to(const LoginPage());
                   },
                 ),
               ],
@@ -275,25 +280,16 @@ class ProfilePage extends StatelessWidget {
 
   ListTile cell(String title, IconData icon, onTap) {
     return ListTile(
-        minLeadingWidth: 0,
-        title: Text(title),
-        leading: Icon(
-          icon,
-        ),
-        trailing: const Icon(
-          Icons.arrow_back_ios_new_rounded,
-          size: 15,
-        ),
-        onTap: onTap);
-  }
-
-  Divider divider() {
-    return Divider(
-      thickness: 1,
-      height: 0,
-      indent: 15,
-      endIndent: 15,
-      color: Colors.grey.shade200,
+      minLeadingWidth: 0,
+      title: Text(title),
+      leading: Icon(
+        icon,
+      ),
+      trailing: const Icon(
+        Icons.arrow_back_ios_new_rounded,
+        size: 15,
+      ),
+      onTap: onTap,
     );
   }
 }

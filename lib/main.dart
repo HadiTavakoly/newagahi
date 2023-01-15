@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newagahi/screens/splash/splash_page.dart';
 import './bindings/my_binding.dart';
 import 'package:get_storage/get_storage.dart';
 import './theme/theme.dart';
@@ -23,8 +22,7 @@ class MyApp extends StatelessWidget {
       initialBinding: MyBinding(),
       theme: themeData,
       home: const DashbordPage(),
-      //splash screen
-      // home: const SplashPage(),
+    
     );
   }
 }

@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import './register_controller.dart';
 
-class RegisterPage extends StatelessWidget {
-  RegisterPage({super.key});
-
-  RegisterController registerController = Get.put(RegisterController());
-
+class RegisterPage extends GetView<RegisterController> {
+  const RegisterPage({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,19 +29,19 @@ class RegisterPage extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
-                infoField('نام', registerController.nameController,
+                infoField('نام', controller.nameController,
                     TextInputType.name, false),
-                infoField('نام کاربری', registerController.usernameController,
+                infoField('نام کاربری', controller.usernameController,
                     TextInputType.name, false),
-                infoField('شماره موبایل', registerController.phoneController,
+                infoField('شماره موبایل', controller.phoneController,
                     TextInputType.phone, false),
-                infoField('ایمیل', registerController.emailController,
+                infoField('ایمیل', controller.emailController,
                     TextInputType.emailAddress, false),
-                infoField('رمز عبور', registerController.passwordController,
+                infoField('رمز عبور', controller.passwordController,
                     TextInputType.visiblePassword, true),
                 infoField(
                     'تایید رمز عبور',
-                    registerController.passwordConfirmationController,
+                    controller.passwordConfirmationController,
                     TextInputType.visiblePassword,
                     true),
                 Padding(

@@ -30,7 +30,7 @@ class PlanController extends GetxController {
         throw Exception('Fail to load plans');
       }
     } catch (e) {
-      throw Exception('Fail to load plans');
+      throw Exception('Error : $e');
     } finally {
       isDataLoading(false);
     }

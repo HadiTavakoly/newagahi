@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'ads_details_controller.dart';
+import '../.././constans.dart';
 
 class AdsDetails extends StatelessWidget {
   const AdsDetails({super.key});
@@ -9,7 +10,6 @@ class AdsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Obx(
           () => Get.find<AdsDetailsController>().isDataLoading.value
@@ -157,8 +157,6 @@ class AdsDetails extends StatelessWidget {
                             textAlign: TextAlign.justify,
                             style: const TextStyle(
                               fontSize: 20,
-                              // fontWeight: FontWeight.bold,
-                              // color: Colors.black54,
                             ),
                           ),
                         ],
@@ -278,8 +276,4 @@ class AdsDetails extends StatelessWidget {
   }
 }
 
-String removeAllHtmlTags(String htmlText) {
-  RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 
-  return htmlText.replaceAll(exp, '');
-}

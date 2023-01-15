@@ -25,13 +25,12 @@ class CategoryController extends GetxController {
 
       if (respons.statusCode == 200) {
         categoriesData = Category.fromJson(jsonDecode(respons.body));
-        // FlutterNativeSplash.remove();
       } else {
         isDataLoading(false);
         throw Exception('Fail to load categories');
       }
     } catch (e) {
-      throw Exception('Fail to load categories');
+      throw Exception('Error : $e');
     } finally {
       isDataLoading(false);
     }

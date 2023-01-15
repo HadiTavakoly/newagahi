@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../../models/categories_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class SubCategoryController extends GetxController {
   Category? subCategoriesData;
@@ -28,13 +27,12 @@ class SubCategoryController extends GetxController {
 
       if (respons.statusCode == 200) {
         subCategoriesData = Category.fromJson(jsonDecode(respons.body));
-        // FlutterNativeSplash.remove();
       } else {
         isDataLoading(false);
-        throw Exception('Fail to load categories');
+        throw Exception('Fail to load subCategories');
       }
     } catch (e) {
-      throw Exception('Fail to load categories');
+      throw Exception('Error : $e');
     } finally {
       isDataLoading(false);
     }

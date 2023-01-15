@@ -61,7 +61,7 @@ class Datum {
         descriptionLimit: json["description_limit"],
         owner: Owner.fromJson(json["owner"]),
         price: json["price"],
-        link: json["link"] == null ? null : json["link"],
+        link: json["link"] ?? null,
         views: json["views"],
         category: json["category"],
         state: json["state"],
@@ -84,9 +84,9 @@ class Owner {
   String? address;
 
   factory Owner.fromJson(Map<String, dynamic> json) => Owner(
-        name: json["name"] == null ? null : json["name"],
+        name: json["name"] ?? null,
         email: json["email"],
         phone: json["phone"],
-        address: json["address"] == null ? null : json["address"],
+        address: json["address"] ?? null,
       );
 }

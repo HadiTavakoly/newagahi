@@ -4,7 +4,7 @@ import 'dashbord_controller.dart';
 import '../home/home_page.dart';
 import '../category/category_page.dart';
 import '../profile/profile_page.dart';
-import '../splash/auth_controller.dart';
+import 'auth_controller.dart';
 import '../login/login_page.dart';
 import '../ads_register/ads_register_page.dart';
 import '../plans/plan_page.dart';
@@ -21,10 +21,10 @@ class DashbordPage extends GetView<DashbordController> {
               child: IndexedStack(
                 index: controller.tabIndex.value,
                 children: [
-                  HomePage(),
+                  const HomePage(),
                   const CategoryPage(),
                   Get.find<AuthController>().isLogged.value
-                      ?  const AdsRegisterPage()
+                      ?   const AdsRegisterPage()
                       : LoginPage(),
                   const PlanPage(),
                   const ProfilePage(),

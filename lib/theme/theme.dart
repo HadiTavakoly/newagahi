@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../constans.dart';
 
 final themeData = ThemeData(
+  scaffoldBackgroundColor: Colors.white,
   fontFamily: 'vazir',
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: const TextStyle(

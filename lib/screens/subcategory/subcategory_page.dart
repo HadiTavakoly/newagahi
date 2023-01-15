@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
-import 'package:newagahi/screens/ads_register/ads_register_page.dart';
 import 'subcategory_controller.dart';
-import '../dashbord/dashbord_controller.dart';
 
 class SubCategory extends StatelessWidget {
   const SubCategory({super.key});
@@ -24,10 +23,10 @@ class SubCategory extends StatelessWidget {
       body: Center(
         child: Obx(
           () => Get.find<SubCategoryController>().isDataLoading.value
-              ? const SpinKitThreeBounce(
+              ? SpinKitThreeBounce(
                   size: 25,
-                  color: Color(0xffC42127),
-                  duration: Duration(
+                  color: primaryColor,
+                  duration: const Duration(
                     seconds: 1,
                   ),
                 )
@@ -54,10 +53,6 @@ class SubCategory extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        // trailing: const Icon(
-                        //   Icons.arrow_back_ios_new_rounded,
-                        //   size: 15,
-                        // ),
                         onTap: () {
                           Get.find<AdsRegisterController>().categoryId.value =
                               Get.find<SubCategoryController>()
@@ -66,14 +61,13 @@ class SubCategory extends StatelessWidget {
                                       .id ??
                                   0;
 
-
-
-                          Get.find<AdsRegisterController>().subCategoryName.value =
-                              Get.find<SubCategoryController>()
-                                      .subCategoriesData!
-                                      .data![index]
-                                      .name ??
-                                  '';
+                          Get.find<AdsRegisterController>()
+                              .subCategoryName
+                              .value = Get.find<SubCategoryController>()
+                                  .subCategoriesData!
+                                  .data![index]
+                                  .name ??
+                              '';
                           Get.back();
                           Get.back();
                         },

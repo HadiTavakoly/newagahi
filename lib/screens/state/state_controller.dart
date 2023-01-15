@@ -30,7 +30,7 @@ class StateController extends GetxController {
         throw Exception('Fail to load states');
       }
     } catch (e) {
-      throw Exception('Fail to load states');
+      throw Exception('Error : $e');
     } finally {
       isDataLoading(false);
     }

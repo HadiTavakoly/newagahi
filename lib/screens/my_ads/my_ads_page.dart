@@ -3,18 +3,16 @@ import 'package:get/get.dart';
 import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
 import 'package:newagahi/screens/ads_register/ads_register_page.dart';
-import 'package:newagahi/screens/edite_ads/edite_ads_page.dart';
 import 'package:newagahi/screens/my_ads/my_ads_controller.dart';
+import 'package:newagahi/screens/register/register_page.dart';
 import '../../bindings/my_binding.dart';
 import '../ads_details/ads_details_page.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
 class MyAdsPage extends GetView<MyAdsController> {
-  MyAdsPage({super.key});
-  final formatter = NumberFormat(
-    ',###',
-  );
+  const MyAdsPage({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,19 +25,35 @@ class MyAdsPage extends GetView<MyAdsController> {
       body: Center(
         child: Obx(
           () => controller.isDataLoading.value
-              ? const SpinKitThreeBounce(
+              ?  SpinKitThreeBounce(
                   size: 25,
-                  color: Color(0xffC42127),
-                  duration: Duration(
+                  color: primaryColor,
+                  duration: const Duration(
                     seconds: 1,
                   ),
                 )
               : controller.myAdsData!.data!.isEmpty
-                  ? const Text(
-                      'شما آگهی ای ندارید',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                  ? Column(
+                      children: [
+                        const Text(
+                          'شما آگهی ای ندارید',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Get.to(() => RegisterPage());
+                          },
+                          child: Text(
+                            'برای ثبت آگهی جدید کلیک کنید',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   : ListView.separated(
                       cacheExtent: 200,
@@ -161,11 +175,24 @@ class MyAdsPage extends GetView<MyAdsController> {
                                   height: 20,
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    Get.to(
-                                      const EditeAdsPage(),
+                                  onTap: () async {
+                                    var sendData =
+                                        controller.myAdsData!.data![index];
+                                    Get.delete<AdsRegisterController>();
+                                    await Get.to(
+                                      () => const AdsRegisterPage(),
+                                      arguments: [
+                                        'edit',
+                                        sendData.title,
+                                        sendData.description,
+                                        sendData.id,
+                                        sendData.price,
+                                        sendData.owner!.name,
+                                        sendData.owner!.phone,
+                                        sendData.owner!.address,
+                                        sendData.owner!.email,
+                                      ],
                                       binding: MyBinding(),
-                                      arguments: controller.myAdsData,
                                     );
                                   },
                                   child: Icon(

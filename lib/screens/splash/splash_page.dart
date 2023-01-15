@@ -12,7 +12,6 @@ class SplashPage extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: primaryColor,
       body: Center(
         child: Column(
           children: [

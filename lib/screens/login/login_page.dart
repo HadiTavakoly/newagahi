@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/register/register_page.dart';
 import '../login/login_controller.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends GetView<LoginController> {
+  const LoginPage({super.key});
 
-  LoginController loginController = Get.put(LoginController());
-
-  Widget _suffixIcon = const Icon(
-    Icons.lock_outline,
-    color: Color(0xffC42127),
-  );
-  var aaa = Get.find<LoginController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +36,7 @@ class LoginPage extends StatelessWidget {
                 TextField(
                   style: const TextStyle(fontSize: 20),
                   cursorColor: const Color(0xffC42127),
-                  controller: loginController.usernameController,
+                  controller: controller.usernameController,
                   decoration: const InputDecoration(
                     labelText: 'نام کاربری',
                   ),
@@ -55,7 +49,7 @@ class LoginPage extends StatelessWidget {
                     style: const TextStyle(fontSize: 20),
                     cursorColor: const Color(0xffC42127),
                     obscureText: Get.find<LoginController>().obscure.value,
-                    controller: loginController.passwordController,
+                    controller: controller.passwordController,
                     decoration: InputDecoration(
                       suffixIcon: GestureDetector(
                         child: Get.find<LoginController>().obscure.value
@@ -84,7 +78,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 Obx(
                   () => Visibility(
-                    visible: aaa.visible.value,
+                    visible: controller.visible.value,
                     child: GestureDetector(
                       child: const Text(
                         'پاک کردن فرم',
@@ -94,10 +88,10 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        aaa.usernameController.clear();
-                        aaa.passwordController.clear();
-                        aaa.message.value = '';
-                        aaa.visible.value = false;
+                        controller.usernameController.clear();
+                        controller.passwordController.clear();
+                        controller.message.value = '';
+                        controller.visible.value = false;
                       },
                     ),
                   ),
@@ -107,7 +101,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    aaa.message.value,
+                    controller.message.value,
                     style: const TextStyle(
                       color: Color(0xffC42127),
                       fontSize: 20,
@@ -156,7 +150,7 @@ class LoginPage extends StatelessWidget {
                   elevation: 0,
                 ),
                 onPressed: () {
-                  loginController.loginWithEmail();
+                  controller.loginWithEmail();
                 },
                 child: const Text(
                   'ورود',
@@ -173,3 +167,8 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+Widget _suffixIcon = Icon(
+  Icons.lock_outline,
+  color: primaryColor,
+);
