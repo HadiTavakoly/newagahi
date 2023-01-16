@@ -10,7 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AdsRegisterController extends GetxController {
   Auth? adsRegistrData;
-  var imagePath = ''.obs;
+  var imagePath1 = ''.obs;
+  var imagePath2 = ''.obs;
+  var imagePath3 = ''.obs;
+  var imagePath4 = ''.obs;
   var isLoading = false.obs;
   var categoryId = 0.obs;
   var categoryName = ''.obs;
@@ -64,36 +67,107 @@ class AdsRegisterController extends GetxController {
     adsOwnerPhone.value = '';
     adsOwnerEmail.value = '';
     adsOwnerAddress.value = '';
-    imagePath.value = '';
+    imagePath1.value = '';
+    imagePath2.value = '';
+    imagePath3.value = '';
+    imagePath4.value = '';
   }
 
   Future<void> registrAds() async {
     try {
       isLoading(true);
-      var response = await http.post(
+      // var response = await http.post(
+      //   Uri.https(
+      //     'newagahi.ir',
+      //     'api/v1/ads/create',
+      //   ),
+      //   body: {
+      //     'api_token': Get.find<AuthController>().getToken(),
+      //     'ADS_TITLE': adsTitle.value,
+      //     'ADS_DESCRIPTION': adsDescription.value,
+      //     'ADS_PRICE': adsPrice.value,
+      //     'STATE_ID':
+      //         stateId.value.toString() == '0' ? '' : stateId.value.toString(),
+      //     'CITY_ID':
+      //         cityId.value.toString() == '0' ? '' : cityId.value.toString(),
+      //     'CATEGORY_ID': categoryId.value.toString(),
+      //     'ADS_OWNER_NAME': adsOwnerName.value,
+      //     'ADS_OWNER_PHONE': adsOwnerPhone.value,
+      //     'ADS_OWNER_ADDRESS': adsOwnerAddress.value,
+      //     'special': planId.value.toString(),
+      //   },
+      // );
+//------------------------------------------------------------------------------
+      Map<String, String> body = {
+        'api_token': Get.find<AuthController>().getToken().toString(),
+        'ADS_TITLE': adsTitle.value,
+        'ADS_DESCRIPTION': adsDescription.value,
+        'ADS_PRICE': adsPrice.value,
+        'STATE_ID':
+            stateId.value.toString() == '0' ? '' : stateId.value.toString(),
+        'CITY_ID':
+            cityId.value.toString() == '0' ? '' : cityId.value.toString(),
+        'CATEGORY_ID': categoryId.value.toString(),
+        'ADS_OWNER_NAME': adsOwnerName.value,
+        'ADS_OWNER_PHONE': adsOwnerPhone.value,
+        'ADS_OWNER_ADDRESS': adsOwnerAddress.value,
+        'special': planId.value.toString(),
+      };
+      var req = http.MultipartRequest(
+        'POST',
         Uri.https(
           'newagahi.ir',
           'api/v1/ads/create',
         ),
-        body: {
-          'api_token': Get.find<AuthController>().getToken(),
-          'ADS_TITLE': adsTitle.value,
-          'ADS_DESCRIPTION': adsDescription.value,
-          'ADS_PRICE': adsPrice.value,
-          'STATE_ID':
-              stateId.value.toString() == '0' ? '' : stateId.value.toString(),
-          'CITY_ID':
-              cityId.value.toString() == '0' ? '' : cityId.value.toString(),
-          'CATEGORY_ID': categoryId.value.toString(),
-          'ADS_OWNER_NAME': adsOwnerName.value,
-          'ADS_OWNER_PHONE': adsOwnerPhone.value,
-          'ADS_OWNER_ADDRESS': adsOwnerAddress.value,
-          'special': planId.value.toString(),
-        },
       );
+      if (imagePath1.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath1.value,
+            ),
+          ],
+        );
+      }
+      if (imagePath2.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath2.value,
+            ),
+          ],
+        );
+      }
+      if (imagePath3.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath3.value,
+            ),
+          ],
+        );
+      }
+      if (imagePath4.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath4.value,
+            ),
+          ],
+        );
+      }
 
+      req.fields.addAll(body);
+
+      var response = await req.send();
+      final responseBody = await response.stream.bytesToString();
+//------------------------------------------------------------------------------
       if (response.statusCode == 200) {
-        adsRegistrData = Auth.fromJson(jsonDecode(response.body));
+        adsRegistrData = Auth.fromJson(jsonDecode(responseBody));
 
         if (adsRegistrData!.code == 1) {
           refreshFields();
@@ -106,7 +180,7 @@ class AdsRegisterController extends GetxController {
           throw adsRegistrData!.message.toString();
         }
       } else {
-        throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
+        throw jsonDecode(responseBody)["message"] ?? "Unknown Error Occured";
       }
     } catch (error) {
       if (error.toString() == '1') {
@@ -193,31 +267,104 @@ class AdsRegisterController extends GetxController {
   Future<void> updateMyAds(int id) async {
     try {
       isLoading(true);
-      var response = await http.post(
+      // var response = await http.post(
+      //   Uri.https(
+      //     'newagahi.ir',
+      //     'api/v1/panel/ads/update/$id',
+      //   ),
+      //   body: {
+      //     'api_token': Get.find<AuthController>().getToken(),
+      //     'ADS_TITLE': adsTitle.value,
+      //     'ADS_DESCRIPTION': adsDescription.value,
+      //     'ADS_OWNER_NAME': adsOwnerName.value,
+      //     'ADS_OWNER_EMAIL': adsOwnerEmail.value,
+      //     'ADS_PRICE': adsPrice.value,
+      //     'STATE_ID':
+      //         stateId.value.toString() == '0' ? '' : stateId.value.toString(),
+      //     'CITY_ID':
+      //         cityId.value.toString() == '0' ? '' : cityId.value.toString(),
+      //     'CATEGORY_ID': categoryId.value.toString(),
+      //     'ADS_OWNER_PHONE': adsOwnerPhone.value,
+      //     'ADS_OWNER_ADDRESS': adsOwnerAddress.value,
+      //     'special': planId.value.toString(),
+      //   },
+      // );
+
+//------------------------------------------------------------------------------
+
+      Map<String, String> body = {
+        'api_token': Get.find<AuthController>().getToken().toString(),
+        'ADS_TITLE': adsTitle.value,
+        'ADS_DESCRIPTION': adsDescription.value,
+        'ADS_OWNER_NAME': adsOwnerName.value,
+        'ADS_OWNER_EMAIL': adsOwnerEmail.value,
+        'ADS_PRICE': adsPrice.value,
+        'STATE_ID':
+            stateId.value.toString() == '0' ? '' : stateId.value.toString(),
+        'CITY_ID':
+            cityId.value.toString() == '0' ? '' : cityId.value.toString(),
+        'CATEGORY_ID': categoryId.value.toString(),
+        'ADS_OWNER_PHONE': adsOwnerPhone.value,
+        'ADS_OWNER_ADDRESS': adsOwnerAddress.value,
+        'special': planId.value.toString(),
+      };
+
+      var req = http.MultipartRequest(
+        'POST',
         Uri.https(
           'newagahi.ir',
           'api/v1/panel/ads/update/$id',
         ),
-        body: {
-          'api_token': Get.find<AuthController>().getToken(),
-          'ADS_TITLE': adsTitle.value,
-          'ADS_DESCRIPTION': adsDescription.value,
-          'ADS_OWNER_NAME': adsOwnerName.value,
-          'ADS_OWNER_EMAIL': adsOwnerEmail.value,
-          'ADS_PRICE': adsPrice.value,
-          'STATE_ID':
-              stateId.value.toString() == '0' ? '' : stateId.value.toString(),
-          'CITY_ID':
-              cityId.value.toString() == '0' ? '' : cityId.value.toString(),
-          'CATEGORY_ID': categoryId.value.toString(),
-          'ADS_OWNER_PHONE': adsOwnerPhone.value,
-          'ADS_OWNER_ADDRESS': adsOwnerAddress.value,
-          'special': planId.value.toString(),
-        },
       );
+      if (imagePath1.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath1.value,
+            ),
+          ],
+        );
+      }
+      if (imagePath2.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath2.value,
+            ),
+          ],
+        );
+      }
+      if (imagePath3.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath3.value,
+            ),
+          ],
+        );
+      }
+      if (imagePath4.value != '') {
+        req.files.addAll(
+          [
+            await http.MultipartFile.fromPath(
+              'images[]',
+              imagePath4.value,
+            ),
+          ],
+        );
+      }
+
+      req.fields.addAll(body);
+
+      var response = await req.send();
+      final responseBody = await response.stream.bytesToString();
+//------------------------------------------------------------------------------
 
       if (response.statusCode == 200) {
-        adsRegistrData = Auth.fromJson(jsonDecode(response.body));
+        adsRegistrData = Auth.fromJson(jsonDecode(responseBody));
 
         if (adsRegistrData!.code == 1) {
           refreshFields();
@@ -231,7 +378,7 @@ class AdsRegisterController extends GetxController {
           throw adsRegistrData!.message.toString();
         }
       } else {
-        throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
+        throw jsonDecode(responseBody)["message"] ?? "Unknown Error Occured";
       }
     } catch (error) {
       if (error.toString() == '1') {
@@ -315,10 +462,18 @@ class AdsRegisterController extends GetxController {
     }
   }
 
-  void getImage(ImageSource imageSource) async {
+  void getImage(ImageSource imageSource, int imagePathId) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
-      imagePath.value = pickedFile.path;
+      if (imagePathId == 1) {
+        imagePath1.value = pickedFile.path;
+      } else if (imagePathId == 2) {
+        imagePath2.value = pickedFile.path;
+      } else if (imagePathId == 3) {
+        imagePath3.value = pickedFile.path;
+      } else {
+        imagePath4.value = pickedFile.path;
+      }
     } else {
       Get.snackbar('توجه', 'عکسی انتخاب نشد');
     }

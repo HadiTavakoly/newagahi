@@ -10,8 +10,11 @@ import '../dashbord/dashbord_controller.dart';
 import '../category/category_page.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class AdsRegisterPage extends GetView<AdsRegisterController> {
-  const AdsRegisterPage({super.key});
+class AdsRegisterPage extends StatelessWidget {
+  AdsRegisterPage({super.key});
+
+  var controller = Get.put(AdsRegisterController());
+
   refresh() {
     controller.categoryId.value = 0;
     controller.cityId.value = 0;
@@ -21,7 +24,10 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
     controller.adsOwnerName.value = '';
     controller.adsOwnerPhone.value = '';
     controller.adsOwnerAddress.value = '';
-    controller.imagePath.value = '';
+    controller.imagePath1.value = '';
+    controller.imagePath2.value = '';
+    controller.imagePath3.value = '';
+    controller.imagePath4.value = '';
   }
 
   @override
@@ -124,109 +130,16 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                         ),
                         reqInfo('عکس آگهی'),
                         reqInfoDescrieption(
-                          'افزودن عکس بازدید آگهی شما را افزایش می دهد.',
+                          'افزودن عکس بازدید آگهی شما را افزایش می دهد',
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.bottomSheet(
-                              Container(
-                                height: Get.height / 4,
-                                color: Colors.white,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Container(
-                                        height: 4,
-                                        width: Get.width / 14,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[350],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 20),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'انتخاب عکس',
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.grey[700],
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Divider(
-                                              color:
-                                                  Colors.grey.withOpacity(0.5),
-                                            ),
-                                            ListTile(
-                                              horizontalTitleGap: 0,
-                                              title: const Text('از دوربین'),
-                                              leading: const Icon(
-                                                Icons.photo_camera,
-                                                color: Color(0xffC42127),
-                                              ),
-                                              onTap: () {
-                                                controller.getImage(
-                                                    ImageSource.camera);
-                                                Get.back();
-                                              },
-                                            ),
-                                            ListTile(
-                                              horizontalTitleGap: 0,
-                                              title: const Text('از گالری'),
-                                              leading: const Icon(
-                                                Icons.image,
-                                                color: Color(0xffC42127),
-                                              ),
-                                              onTap: () {
-                                                controller.getImage(
-                                                    ImageSource.gallery);
-                                                // Get.back();
-                                                Get.back();
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: Get.width / 3,
-                            width: Get.width / 3,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: controller.imagePath.value == ''
-                                ? const Icon(
-                                    Icons.add_a_photo_outlined,
-                                    size: 50,
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: FileImage(
-                                          File(controller.imagePath.value),
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            addImage(controller.imagePath1.value, 1),
+                            addImage(controller.imagePath2.value, 2),
+                            addImage(controller.imagePath3.value, 3),
+                            addImage(controller.imagePath4.value, 4),
+                          ],
                         ),
                         reqInfo('توضیحات آگهی'),
                         reqInfoDescrieption(
@@ -285,7 +198,7 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                         sellerInfo(
                           'ایمیل',
                           controller.adsOwnerEmail.value,
-                          TextInputType.phone,
+                          TextInputType.emailAddress,
                           (String value) {
                             controller.adsOwnerEmail.value = value;
                           },
@@ -353,6 +266,116 @@ class AdsRegisterPage extends GetView<AdsRegisterController> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+
+  GestureDetector addImage(imagePath, int id) {
+    return GestureDetector(
+      onLongPress: () {
+        if (id == 1) {
+          controller.imagePath1.value = '';
+        } else if (id == 2) {
+          controller.imagePath2.value = '';
+        } else if (id == 3) {
+          controller.imagePath3.value = '';
+        } else {
+          controller.imagePath4.value = '';
+        }
+      },
+      onTap: () {
+        Get.bottomSheet(
+          Container(
+            height: Get.height / 4,
+            color: Colors.white,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    height: 4,
+                    width: Get.width / 14,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[350],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'انتخاب عکس',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Divider(
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          horizontalTitleGap: 0,
+                          title: const Text('از دوربین'),
+                          leading: const Icon(
+                            Icons.photo_camera,
+                            color: Color(0xffC42127),
+                          ),
+                          onTap: () {
+                            controller.getImage(ImageSource.camera, id);
+                            Get.back();
+                          },
+                        ),
+                        ListTile(
+                          horizontalTitleGap: 0,
+                          title: const Text('از گالری'),
+                          leading: const Icon(
+                            Icons.image,
+                            color: Color(0xffC42127),
+                          ),
+                          onTap: () {
+                            controller.getImage(ImageSource.gallery, id);
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: Get.width / 5,
+        width: Get.width / 5,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: imagePath == ''
+            ? const Icon(
+                Icons.add_a_photo_outlined,
+                size: 30,
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: FileImage(
+                      File(imagePath),
+                    ),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

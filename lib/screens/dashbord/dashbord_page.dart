@@ -24,8 +24,8 @@ class DashbordPage extends GetView<DashbordController> {
                   const HomePage(),
                   const CategoryPage(),
                   Get.find<AuthController>().isLogged.value
-                      ?   const AdsRegisterPage()
-                      : LoginPage(),
+                      ?    AdsRegisterPage()
+                      : const LoginPage(),
                   const PlanPage(),
                   const ProfilePage(),
                 ],

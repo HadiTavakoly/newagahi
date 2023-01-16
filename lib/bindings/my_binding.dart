@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:newagahi/screens/profile/profile_controller.dart';
 import '../screens/category/category_controller.dart';
-import '../screens/home/ads_controller.dart';
 import '../screens/ads_details/ads_details_controller.dart';
 import '../screens/subcategory/subcategory_controller.dart';
 import '../screens/state/state_controller.dart';
@@ -18,7 +17,7 @@ import '../screens/my_ads/my_ads_controller.dart';
 class MyBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(CategoryController());
+    Get.lazyPut(() => CategoryController());
     Get.lazyPut(() => SubCategoryController());
     Get.lazyPut(() => AdsDetailsController());
     Get.lazyPut(() => StateController());
@@ -27,10 +26,10 @@ class MyBinding extends Bindings {
     Get.lazyPut(() => DashbordController());
     Get.lazyPut(() => AuthController());
     Get.lazyPut(() => LoginController());
-    Get.lazyPut(() => AdsRegisterController());
+    Get.lazyPut(() => AdsRegisterController(), );
     Get.lazyPut(() => PlanController());
     Get.lazyPut(() => RegisterController());
-    Get.lazyPut(() => MyAdsController());
+    Get.lazyPut(() => MyAdsController(),);
     Get.lazyPut(() => ProfileController());
   }
 }

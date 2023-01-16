@@ -180,7 +180,7 @@ class MyAdsPage extends GetView<MyAdsController> {
                                         controller.myAdsData!.data![index];
                                     Get.delete<AdsRegisterController>();
                                     await Get.to(
-                                      () => const AdsRegisterPage(),
+                                      () =>  AdsRegisterPage(),
                                       arguments: [
                                         'edit',
                                         sendData.title,
