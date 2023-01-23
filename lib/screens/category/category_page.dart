@@ -16,7 +16,6 @@ class CategoryPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'دسته بندی آگهی ها',
-          
         ),
       ),
       body: Center(
@@ -45,8 +44,22 @@ class CategoryPage extends StatelessWidget {
                                       .data![index]
                                       .name ??
                                   '';
+
+                          // Get.find<SearchController>().categoryName.value =
+                          //     Get.find<CategoryController>()
+                          //             .categoriesData!
+                          //             .data![index]
+                          //             .name ??
+                          //         '';
+
+                          // Get.find<SearchController>().categoryId.value =
+                          //     Get.find<CategoryController>()
+                          //             .categoriesData!
+                          //             .data![index]
+                          //             .id ??
+                          //         0;
                           Get.to(
-                            const SubCategory(),
+                            () => const SubCategory(),
                             binding: MyBinding(),
                             arguments: [
                               Get.find<CategoryController>()

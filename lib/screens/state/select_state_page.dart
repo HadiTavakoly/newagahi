@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/city/select_city_page.dart';
+import 'package:newagahi/screens/search/search_controller.dart';
 import 'state_controller.dart';
 import '../../bindings/my_binding.dart';
 
@@ -21,7 +22,7 @@ class SelectStatePage extends StatelessWidget {
       ),
       body: Center(
         child: Obx(() => Get.find<StateController>().isDataLoading.value
-            ?  SpinKitThreeBounce(
+            ? SpinKitThreeBounce(
                 size: 25,
                 color: primaryColor,
                 duration: const Duration(
@@ -39,6 +40,27 @@ class SelectStatePage extends StatelessWidget {
                       //             .data![index]
                       //             .id ??
                       //         0;
+
+                      // Get.find<StateController>().stateId.value =
+                      //     Get.find<StateController>()
+                      //             .stateData!
+                      //             .data![index]
+                      //             .id ??
+                      //         0;
+
+                      Get.find<SearchController>().query['stateId'] =
+                          Get.find<StateController>()
+                              .stateData!
+                              .data![index]
+                              .id
+                              .toString();
+
+                      Get.find<StateController>().stateName.value =
+                          Get.find<StateController>()
+                                  .stateData!
+                                  .data![index]
+                                  .stateName ??
+                              '';
                       Get.to(
                         () => const SelectCityPage(),
                         arguments: Get.find<StateController>()
@@ -74,7 +96,6 @@ class SelectStatePage extends StatelessWidget {
                 },
               )),
       ),
-      
     );
   }
 }

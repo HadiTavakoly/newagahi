@@ -22,7 +22,7 @@ class DashbordPage extends GetView<DashbordController> {
                 index: controller.tabIndex.value,
                 children: [
                   const HomePage(),
-                  const CategoryPage(),
+                    CategoryPage(),
                   Get.find<AuthController>().isLogged.value
                       ?    AdsRegisterPage()
                       : const LoginPage(),

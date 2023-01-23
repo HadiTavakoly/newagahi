@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:newagahi/screens/profile/profile_controller.dart';
+import 'package:newagahi/screens/setting/setting_controller.dart';
 import '../screens/category/category_controller.dart';
 import '../screens/ads_details/ads_details_controller.dart';
+import '../screens/my_favorite_ads/my_favorite_ads_controller.dart';
+import '../screens/search/search_controller.dart';
 import '../screens/subcategory/subcategory_controller.dart';
 import '../screens/state/state_controller.dart';
 import '../screens/city/city_controller.dart';
@@ -31,5 +34,8 @@ class MyBinding extends Bindings {
     Get.lazyPut(() => RegisterController());
     Get.lazyPut(() => MyAdsController(),);
     Get.lazyPut(() => ProfileController());
+    Get.lazyPut(() => MyFavoriteAdsController());
+    Get.lazyPut(() => SettingController());
+    Get.lazyPut(() => SearchController());
   }
 }

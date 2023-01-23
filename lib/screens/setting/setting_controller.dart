@@ -1,39 +1,37 @@
 import 'package:get/get.dart';
-import '../../models/city_model.dart';
+import 'package:newagahi/screens/dashbord/auth_controller.dart';
+import '../../models/ads_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class CityController extends GetxController {
-  City? cityData;
-  var id = Get.arguments??3;
+class SettingController extends GetxController {
+  Ads? myFavoriteAdsData;
   var isDataLoading = false.obs;
-  var cityName = ''.obs;
-  var cityId = 0.obs;
-
+  Map<String, String> queryParameters = {
+    'api_token': Get.find<AuthController>().getToken().toString(),
+  };
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    getCity(id);
+    getMyFavoriteAds();
   }
 
-
-
-  getCity(int id) async {
+  getMyFavoriteAds() async {
     try {
       isDataLoading(true);
       var respons = await http.get(
         Uri.https(
           'newagahi.ir',
-          'api/v1/state/$id',
+          'api/v1/panel/ads/favorites',
+          queryParameters,
         ),
       );
-
       if (respons.statusCode == 200) {
-        cityData = City.fromJson(jsonDecode(respons.body));
+        myFavoriteAdsData = Ads.fromJson(jsonDecode(respons.body));
       } else {
         isDataLoading(false);
-        throw Exception('Fail to load city');
+        throw Exception('Fail to load my favorite ads');
       }
     } catch (e) {
       throw Exception('Error : $e');

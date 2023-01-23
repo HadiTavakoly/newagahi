@@ -91,7 +91,7 @@ class AdsRegisterPage extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            Get.to(const CategoryPage());
+                            Get.to( CategoryPage());
                           },
                         ),
                         divider(),

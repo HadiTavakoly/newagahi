@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/screens/ads_details/ads_details_page.dart';
 import 'package:newagahi/screens/home/home_controller.dart';
+import 'package:newagahi/screens/search/search_page.dart';
 import '../category/category_controller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../subcategory/subcategory_page.dart';
@@ -36,19 +37,31 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      // Get.find<HomeController>().list.length.toString(),
-                      'جستجو در همه آگهی ها',
-                      style: TextStyle(
-                        color: Colors.grey,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(
+                          () => SearchPage(),
+                          binding: MyBinding(),
+                        );
+                      },
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            // Get.find<HomeController>().list.length.toString(),
+                            'جستجو در همه آگهی ها',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -241,7 +254,7 @@ class HomePage extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 15,
+                                // fontSize: 15,
                                 color: Colors.grey[600],
                                 fontWeight: FontWeight.bold,
                               ),
@@ -251,7 +264,7 @@ class HomePage extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 15,
+                                // fontSize: 15,
                                 color: Colors.grey[600],
                                 fontWeight: FontWeight.bold,
                               ),

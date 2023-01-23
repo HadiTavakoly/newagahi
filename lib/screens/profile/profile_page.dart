@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
 import 'package:newagahi/screens/my_ads/my_ads_page.dart';
+import 'package:newagahi/screens/my_favorite_ads/my_favorite_ads_page.dart';
+import 'package:newagahi/screens/setting/setting_page.dart';
 import '../../constans.dart';
 import '../dashbord/auth_controller.dart';
 import '../login/login_page.dart';
@@ -58,11 +60,40 @@ class ProfilePage extends StatelessWidget {
                     )
                   : const SizedBox(),
             ),
-            cell('تنظیمات', Icons.settings, () {}),
+            divider(),
+            Obx(
+              () => Get.find<AuthController>().isLogged.value
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        cell(
+                          'آگهی های محبوب',
+                          Icons.favorite,
+                          () async {
+                            await Get.to(
+                              () => const MyFavoriteAdsPage(),
+                              binding: MyBinding(),
+                            );
+                            Get.put<AdsRegisterController>(
+                              AdsRegisterController(),
+                            );
+                          },
+                        ),
+                        divider(),
+                      ],
+                    )
+                  : const SizedBox(),
+            ),
+            cell('تنظیمات', Icons.settings, () {
+              Get.to(
+                () => const SettingPage(),
+              );
+            }),
             divider(),
             cell(
               'پشتیبانی و قوانین',
-              Icons.headset_mic_outlined,
+              Icons.headset_mic,
               () {
                 _launchUrl(
                   Uri.parse(

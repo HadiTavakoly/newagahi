@@ -9,62 +9,48 @@ import '../../bindings/my_binding.dart';
 import '../ads_details/ads_details_page.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class MyAdsPage extends GetView<MyAdsController> {
-  const MyAdsPage({super.key});
-  
+import 'my_favorite_ads_controller.dart';
+
+class MyFavoriteAdsPage extends GetView<MyFavoriteAdsController> {
+  const MyFavoriteAdsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'آگهی های من',
+          'آگهی های محبوب',
         ),
       ),
       body: Center(
         child: Obx(
           () => controller.isDataLoading.value
-              ?  SpinKitThreeBounce(
+              ? SpinKitThreeBounce(
                   size: 25,
                   color: primaryColor,
                   duration: const Duration(
                     seconds: 1,
                   ),
                 )
-              : controller.myAdsData!.data!.isEmpty
-                  ? Column(
-                      children: [
-                        const Text(
-                          'شما آگهی ای ندارید',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Get.to(() => RegisterPage());
-                          },
-                          child: Text(
-                            'برای ثبت آگهی جدید کلیک کنید',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
+              : controller.myFavoriteAdsData!.data!.isEmpty
+                  ? const Text(
+                    'شما آگهی ای ندارید',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  )
                   : ListView.separated(
                       cacheExtent: 200,
-                      itemCount: controller.myAdsData!.data!.length,
+                      itemCount: controller.myFavoriteAdsData!.data!.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
                             Get.to(
                               () => const AdsDetails(),
                               binding: MyBinding(),
-                              arguments: Get.find<MyAdsController>()
-                                  .myAdsData!
+                              arguments: Get.find<MyFavoriteAdsController>()
+                                  .myFavoriteAdsData!
                                   .data![index]
                                   .id,
                             );
@@ -90,8 +76,8 @@ class MyAdsPage extends GetView<MyAdsController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              controller.myAdsData!.data![index]
-                                                  .titleLimit
+                                              controller.myFavoriteAdsData!
+                                                  .data![index].titleLimit
                                                   .toString(),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
@@ -101,8 +87,8 @@ class MyAdsPage extends GetView<MyAdsController> {
                                               ),
                                             ),
                                             Text(
-                                              controller.myAdsData!.data![index]
-                                                  .descriptionLimit
+                                              controller.myFavoriteAdsData!
+                                                  .data![index].descriptionLimit
                                                   .toString(),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
@@ -113,11 +99,11 @@ class MyAdsPage extends GetView<MyAdsController> {
                                             ),
                                             const Spacer(),
                                             Text(
-                                              controller.myAdsData!.data![index]
-                                                          .price ==
+                                              controller.myFavoriteAdsData!
+                                                          .data![index].price ==
                                                       0
                                                   ? 'توافقی'
-                                                  : '${formatter.format(controller.myAdsData!.data![index].price)} تومان',
+                                                  : '${formatter.format(controller.myFavoriteAdsData!.data![index].price)} تومان',
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -127,7 +113,7 @@ class MyAdsPage extends GetView<MyAdsController> {
                                               ),
                                             ),
                                             Text(
-                                              '${controller.myAdsData!.data![index].updatedAt} در ${controller.myAdsData!.data![index].state}',
+                                              '${controller.myFavoriteAdsData!.data![index].updatedAt} در ${controller.myFavoriteAdsData!.data![index].state}',
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -152,15 +138,17 @@ class MyAdsPage extends GetView<MyAdsController> {
                                                 BorderRadius.circular(5),
                                             image: DecorationImage(
                                               image: NetworkImage(
-                                                controller.myAdsData!
+                                                controller.myFavoriteAdsData!
                                                         .data![index].imageUrl
                                                         .toString()
                                                         .startsWith(
                                                             'https://newagahi.ir')
-                                                    ? controller.myAdsData!
-                                                        .data![index].imageUrl
+                                                    ? controller
+                                                        .myFavoriteAdsData!
+                                                        .data![index]
+                                                        .imageUrl
                                                         .toString()
-                                                    : 'https://newagahi.ir${controller.myAdsData!.data![index].imageUrl.toString()}',
+                                                    : 'https://newagahi.ir${controller.myFavoriteAdsData!.data![index].imageUrl.toString()}',
                                               ),
                                               fit: BoxFit.cover,
                                             ),
@@ -173,33 +161,33 @@ class MyAdsPage extends GetView<MyAdsController> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                GestureDetector(
-                                  onTap: () async {
-                                    var sendData =
-                                        controller.myAdsData!.data![index];
-                                    Get.delete<AdsRegisterController>();
-                                    await Get.to(
-                                      () =>  AdsRegisterPage(),
-                                      arguments: [
-                                        'edit',
-                                        sendData.title,
-                                        sendData.description,
-                                        sendData.id,
-                                        sendData.price,
-                                        sendData.owner!.name,
-                                        sendData.owner!.phone,
-                                        sendData.owner!.address,
-                                        sendData.owner!.email,
-                                      ],
-                                      binding: MyBinding(),
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.edit_outlined,
-                                    size: 30,
-                                    color: primaryColor,
-                                  ),
-                                ),
+                                // GestureDetector(
+                                //   onTap: () async {
+                                //     var sendData =
+                                //         controller.myFavoriteAdsData!.data![index];
+                                //     Get.delete<AdsRegisterController>();
+                                //     await Get.to(
+                                //       () =>  AdsRegisterPage(),
+                                //       arguments: [
+                                //         'edit',
+                                //         sendData.title,
+                                //         sendData.description,
+                                //         sendData.id,
+                                //         sendData.price,
+                                //         sendData.owner!.name,
+                                //         sendData.owner!.phone,
+                                //         sendData.owner!.address,
+                                //         sendData.owner!.email,
+                                //       ],
+                                //       binding: MyBinding(),
+                                //     );
+                                //   },
+                                //   child: Icon(
+                                //     Icons.edit_outlined,
+                                //     size: 30,
+                                //     color: primaryColor,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

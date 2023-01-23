@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 class StateController extends GetxController {
   State? stateData;
   var isDataLoading = false.obs;
+  var stateName = ''.obs;
+  var stateId = 0.obs;
 
   @override
   Future<void> onInit() async {

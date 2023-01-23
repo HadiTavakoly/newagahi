@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/home/home_controller.dart';
+import 'package:newagahi/screens/state/state_controller.dart';
 import '../ads_register/ads_register_controller.dart';
+import '../search/search_controller.dart';
 import 'city_controller.dart';
 
 class SelectCityPage extends GetView<CityController> {
@@ -21,7 +23,7 @@ class SelectCityPage extends GetView<CityController> {
       body: Center(
         child: Obx(
           () => Get.find<CityController>().isDataLoading.value
-              ?  SpinKitThreeBounce(
+              ? SpinKitThreeBounce(
                   size: 25,
                   color: primaryColor,
                   duration: const Duration(
@@ -42,16 +44,14 @@ class SelectCityPage extends GetView<CityController> {
                             .toString(),
                       ),
                       onTap: () {
-                        Get.find<HomeController>().cityName.value =
+                        // Get.find<HomeController>().cityName.value
+                        Get.find<CityController>().cityName.value =
                             controller.cityData!.data![index].cityName ?? '';
-                        Get.find<AdsRegisterController>().stateId.value =
-                            controller.cityData!.data![index].stateId ?? 0;
 
-                        Get.find<AdsRegisterController>().cityId.value =
+                        Get.find<CityController>().cityId.value =
                             controller.cityData!.data![index].id ?? 0;
-
-                        Get.find<AdsRegisterController>().cityName.value =
-                            controller.cityData!.data![index].cityName ?? '';
+                        Get.find<SearchController>().query['cityId'] =
+                            controller.cityData!.data![index].id.toString();
 
                         Get.back();
                         Get.back();

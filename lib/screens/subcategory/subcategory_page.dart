@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
+import 'package:newagahi/screens/search/search_page.dart';
+import '../search/search_controller.dart';
 import 'subcategory_controller.dart';
 
 class SubCategory extends StatelessWidget {
@@ -68,8 +71,26 @@ class SubCategory extends StatelessWidget {
                                   .data![index]
                                   .name ??
                               '';
-                          Get.back();
-                          Get.back();
+
+                          // Get.find<SearchController>().subCategoryName.value =
+                          //     Get.find<SubCategoryController>()
+                          //             .subCategoriesData!
+                          //             .data![index]
+                          //             .name ??
+                          //         '';
+
+                          // Get.find<SearchController>().query['subCategoryId'] =
+                          //     Get.find<SubCategoryController>()
+                          //         .subCategoriesData!
+                          //         .data![index]
+                          //         .id
+                          //         .toString();
+                          // Get.to(
+                          //   () => SearchPage(),
+                          //   binding: MyBinding(),
+                          // );
+                          // Get.back();
+                          // Get.back();
                         },
                       );
                     },
