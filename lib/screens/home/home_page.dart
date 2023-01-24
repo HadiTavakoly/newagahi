@@ -131,6 +131,7 @@ class HomePage extends StatelessWidget {
                                 const SubCategory(),
                                 binding: MyBinding(),
                                 arguments: [
+                                  Get.find<CategoryController>().args.toString(),
                                   Get.find<CategoryController>()
                                       .categoriesData!
                                       .data![index]

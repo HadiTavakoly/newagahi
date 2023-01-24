@@ -6,8 +6,9 @@ import 'package:http/http.dart' as http;
 class SubCategoryController extends GetxController {
   Category? subCategoriesData;
   var isDataLoading = false.obs;
-  int id = Get.arguments[0];
-  String name = Get.arguments[1];
+  var flag = Get.arguments[0];
+  var id = Get.arguments[1];
+  String name = Get.arguments[2];
 
   @override
   Future<void> onInit() async {

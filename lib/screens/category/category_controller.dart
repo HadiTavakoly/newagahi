@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class CategoryController extends GetxController {
   Category? categoriesData;
   var isDataLoading = false.obs;
+  var args = Get.arguments;
 
   @override
   Future<void> onInit() async {

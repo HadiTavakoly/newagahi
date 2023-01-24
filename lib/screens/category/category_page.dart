@@ -8,15 +8,16 @@ import '../../bindings/my_binding.dart';
 import '../ads_register/ads_register_controller.dart';
 
 class CategoryPage extends StatelessWidget {
-  const CategoryPage({super.key});
+  CategoryPage({super.key});
+  var controller = Get.put(CategoryController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'دسته بندی آگهی ها',
-        ),
+            'دسته بندی آگهی ها',
+            ),
       ),
       body: Center(
         child: Obx(
@@ -44,6 +45,21 @@ class CategoryPage extends StatelessWidget {
                                       .data![index]
                                       .name ??
                                   '';
+                          Get.to(
+                            () => const SubCategory(),
+                            binding: MyBinding(),
+                            arguments: [
+                              Get.find<CategoryController>().args.toString(),
+                              Get.find<CategoryController>()
+                                  .categoriesData!
+                                  .data![index]
+                                  .id,
+                              Get.find<CategoryController>()
+                                  .categoriesData!
+                                  .data![index]
+                                  .name
+                            ],
+                          );
 
                           // Get.find<SearchController>().categoryName.value =
                           //     Get.find<CategoryController>()
@@ -58,20 +74,6 @@ class CategoryPage extends StatelessWidget {
                           //             .data![index]
                           //             .id ??
                           //         0;
-                          Get.to(
-                            () => const SubCategory(),
-                            binding: MyBinding(),
-                            arguments: [
-                              Get.find<CategoryController>()
-                                  .categoriesData!
-                                  .data![index]
-                                  .id,
-                              Get.find<CategoryController>()
-                                  .categoriesData!
-                                  .data![index]
-                                  .name
-                            ],
-                          );
                         },
                         child: ListTile(
                           horizontalTitleGap: 0,

@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
+import 'package:newagahi/screens/category/category_controller.dart';
 import 'package:newagahi/screens/plans/plan_controller.dart';
 import 'package:newagahi/screens/state/select_state_page.dart';
 import 'package:get/get.dart';
@@ -91,7 +93,12 @@ class AdsRegisterPage extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            Get.to( CategoryPage());
+                            Get.delete<CategoryController>();
+                            Get.to(
+                              () => CategoryPage(),
+                              arguments: 'false',
+                              binding: MyBinding(),
+                            );
                           },
                         ),
                         divider(),

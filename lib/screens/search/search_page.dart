@@ -17,7 +17,7 @@ import '../state/select_state_page.dart';
 import '../../constans.dart';
 
 class SearchPage extends StatelessWidget {
-   SearchPage({super.key});
+  SearchPage({super.key});
   var controller = Get.find<SearchController>();
   @override
   Widget build(BuildContext context) {
@@ -172,42 +172,38 @@ class SearchPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Obx(
-                  () => Text(controller.subCategoryName.value),
+                  // Obx(
+                  // () => Text(controller.subCategoryName.value),
                   // () => Text(
                   // Get.find<SubCategoryController>().name.toString(),
-                  ),
+                  // ),
                   // ),
                   // Category*
-                  // GestureDetector(
-                  //   child: Chip(
-                  //     label: Obx(
-                  //       () => Text(
-                  //         controller.query['subCategoryId'] == '0' ||
-                  //                 controller.query['subCategoryId'] == ''
-                  //             ? 'دسته بندی'
-                  //             : controller.subCategoryName.value,
-                  //         style: TextStyle(
-                  //           color: primaryColor,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     onDeleted: () {
-                  //       controller.query['subCategoryId'] = '';
-                  //       controller.subCategoryName.value = '';
-                  //     },
-                  //     backgroundColor: primaryColor.withOpacity(0.2),
-                  //     side: BorderSide(color: primaryColor),
-                  //   ),
-                  //   onTap: () {
-                  //     // Get.delete<CategoryController>();
-                  //     // Get.delete<SubCategoryController>();
-                  //     // Get.to(
-                  //     //   () => CategoryPage(),
-                  //     //   // binding: MyBinding(),
-                  //     // );
-                  //   },
-                  // ),
+                  GestureDetector(
+                    child: Chip(
+                      label: Obx(
+                        () => Text(
+                          controller.query['subCategoryId'] == '0' ||
+                                  controller.query['subCategoryId'] == ''
+                              ? 'دسته بندی'
+                              : controller.subCategoryName,
+                          style: TextStyle(
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      onDeleted: () {
+                        controller.query['subCategoryId'] = '';
+                        controller.subCategoryName = '';
+                      },
+                      backgroundColor: primaryColor.withOpacity(0.2),
+                      side: BorderSide(color: primaryColor),
+                    ),
+                    onTap: () {
+                      Get.back();
+                      Get.back();
+                    },
+                  ),
                   const SizedBox(
                     width: 5,
                   ),

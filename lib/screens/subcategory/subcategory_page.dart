@@ -57,41 +57,58 @@ class SubCategory extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          Get.find<AdsRegisterController>().categoryId.value =
-                              Get.find<SubCategoryController>()
-                                      .subCategoriesData!
-                                      .data![index]
-                                      .id ??
-                                  0;
+                          if (Get.find<SubCategoryController>()
+                                  .flag
+                                  .toString() ==
+                              'false') {
+                            Get.find<AdsRegisterController>().categoryId.value =
+                                Get.find<SubCategoryController>()
+                                        .subCategoriesData!
+                                        .data![index]
+                                        .id ??
+                                    0;
 
-                          Get.find<AdsRegisterController>()
-                              .subCategoryName
-                              .value = Get.find<SubCategoryController>()
-                                  .subCategoriesData!
-                                  .data![index]
-                                  .name ??
-                              '';
+                            Get.find<AdsRegisterController>()
+                                .subCategoryName
+                                .value = Get.find<SubCategoryController>()
+                                    .subCategoriesData!
+                                    .data![index]
+                                    .name ??
+                                '';
+                            Get.back();
+                            Get.back();
+                          } else {
+                            Get.to(
+                              () => SearchPage(),
+                              arguments: [
+                                Get.find<SubCategoryController>()
+                                    .subCategoriesData!
+                                    .data![index]
+                                    .id
+                                    .toString(),
+                                Get.find<SubCategoryController>()
+                                        .subCategoriesData!
+                                        .data![index]
+                                        .name ??
+                                    ''
+                              ],
+                              binding: MyBinding(),
+                            );
+                          }
 
-                          Get.find<SearchController>().subCategoryName.value =
-                              Get.find<SubCategoryController>()
-                                      .subCategoriesData!
-                                      .data![index]
-                                      .name ??
-                                  '';
+                          // Get.find<SearchController>().subCategoryName.value =
+                          //     Get.find<SubCategoryController>()
+                          //             .subCategoriesData!
+                          //             .data![index]
+                          //             .name ??
+                          //         '';
 
-                          Get.find<SearchController>().query['subCategoryId'] =
-                              Get.find<SubCategoryController>()
-                                  .subCategoriesData!
-                                  .data![index]
-                                  .id
-                                  .toString();
-                          Get.to(
-                            () => SearchPage(),
-                            //  arguments: '130',
-                            // binding: MyBinding(),
-                          );
-                          // Get.back();
-                          // Get.back();
+                          // Get.find<SearchController>().query['subCategoryId'] =
+                          //     Get.find<SubCategoryController>()
+                          //         .subCategoriesData!
+                          //         .data![index]
+                          //         .id
+                          //         .toString();
                         },
                       );
                     },

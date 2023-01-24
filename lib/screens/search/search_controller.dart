@@ -10,7 +10,7 @@ class SearchController extends GetxController {
   Ads? searchData;
   // var categoryId = 0.obs;
   // var categoryName = ''.obs;
-  var subCategoryName = ''.obs;
+  var subCategoryName = Get.arguments[1].toString();
   var isDataLoading = false.obs;
   // RxList<Datum> list = <Datum>[].obs;
   // ScrollController controller = ScrollController();
@@ -18,7 +18,7 @@ class SearchController extends GetxController {
 
   RxMap query = {
     'search': '',
-    'subCategoryId':'',
+    'subCategoryId': Get.arguments[0].toString(),
     'stateId': '',
     'cityId': '',
   }.obs;
@@ -31,7 +31,7 @@ class SearchController extends GetxController {
       query,
       getFiltredAds,
       time: const Duration(
-        seconds: 2,
+        seconds: 1,
         // milliseconds: 500,
       ),
     );
