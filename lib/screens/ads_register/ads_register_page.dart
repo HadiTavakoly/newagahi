@@ -8,6 +8,7 @@ import 'package:newagahi/screens/category/category_controller.dart';
 import 'package:newagahi/screens/plans/plan_controller.dart';
 import 'package:newagahi/screens/state/select_state_page.dart';
 import 'package:get/get.dart';
+import 'package:newagahi/screens/state/state_controller.dart';
 import '../dashbord/dashbord_controller.dart';
 import '../category/category_page.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -116,9 +117,11 @@ class AdsRegisterPage extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
+                            Get.delete<StateController>();
                             Get.to(
-                              const SelectStatePage(),
-                              // arguments: 2,
+                              () =>  SelectStatePage(),
+                              binding: MyBinding(),
+                              arguments: 'false',
                             );
                           },
                         ),

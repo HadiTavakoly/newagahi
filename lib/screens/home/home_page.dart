@@ -74,8 +74,10 @@ class HomePage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(const SelectStatePage(),
-                        binding: MyBinding(), arguments: 1);
+                    Get.to(
+                       SelectStatePage(),
+                      binding: MyBinding(),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +133,9 @@ class HomePage extends StatelessWidget {
                                 const SubCategory(),
                                 binding: MyBinding(),
                                 arguments: [
-                                  Get.find<CategoryController>().args.toString(),
+                                  Get.find<CategoryController>()
+                                      .args
+                                      .toString(),
                                   Get.find<CategoryController>()
                                       .categoriesData!
                                       .data![index]
@@ -261,7 +265,7 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${value.list[index].updatedAt} در ${value.list[index].state}',
+                              '${value.list[index].updatedAt} در ${value.list[index].city}',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

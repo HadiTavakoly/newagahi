@@ -4,6 +4,7 @@ import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
 import 'package:newagahi/screens/my_ads/my_ads_page.dart';
 import 'package:newagahi/screens/my_favorite_ads/my_favorite_ads_page.dart';
+import 'package:newagahi/screens/plans/plan_page.dart';
 import 'package:newagahi/screens/setting/setting_page.dart';
 import '../../constans.dart';
 import '../dashbord/auth_controller.dart';
@@ -38,53 +39,55 @@ class ProfilePage extends StatelessWidget {
             divider(),
             Obx(
               () => Get.find<AuthController>().isLogged.value
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        cell(
-                          'آگهی های من',
-                          Icons.person,
-                          () async {
-                            await Get.to(
-                              () => const MyAdsPage(),
-                              binding: MyBinding(),
-                            );
-                            Get.put<AdsRegisterController>(
-                              AdsRegisterController(),
-                            );
-                          },
-                        ),
-                        divider(),
-                      ],
+                  ? cell(
+                      'آگهی های من',
+                      Icons.person,
+                      () async {
+                        await Get.to(
+                          () => const MyAdsPage(),
+                          binding: MyBinding(),
+                        );
+                        Get.put<AdsRegisterController>(
+                          AdsRegisterController(),
+                        );
+                      },
                     )
                   : const SizedBox(),
             ),
             divider(),
             Obx(
               () => Get.find<AuthController>().isLogged.value
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        cell(
-                          'آگهی های محبوب',
-                          Icons.favorite,
-                          () async {
-                            await Get.to(
-                              () => const MyFavoriteAdsPage(),
-                              binding: MyBinding(),
-                            );
-                            Get.put<AdsRegisterController>(
-                              AdsRegisterController(),
-                            );
-                          },
-                        ),
-                        divider(),
-                      ],
+                  ? cell(
+                      'آگهی های محبوب',
+                      Icons.favorite,
+                      () async {
+                        await Get.to(
+                          () => const MyFavoriteAdsPage(),
+                          binding: MyBinding(),
+                        );
+                        Get.put<AdsRegisterController>(
+                          AdsRegisterController(),
+                        );
+                      },
                     )
                   : const SizedBox(),
             ),
+            divider(),
+            Obx(
+              () => Get.find<AuthController>().isLogged.value
+                  ? cell(
+                      'تعرفه ها',
+                      Icons.money,
+                      () {
+                        Get.to(
+                          () => const PlanPage(),
+                          binding: MyBinding(),
+                        );
+                      },
+                    )
+                  : const SizedBox(),
+            ),
+            divider(),
             cell('تنظیمات', Icons.settings, () {
               Get.to(
                 () => const SettingPage(),

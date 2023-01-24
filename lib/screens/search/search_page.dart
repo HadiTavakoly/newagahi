@@ -5,6 +5,7 @@ import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/screens/ads_details/ads_details_page.dart';
 import 'package:newagahi/screens/city/city_controller.dart';
 import 'package:newagahi/screens/city/select_city_page.dart';
+import 'package:newagahi/screens/dashbord/dashbord_controller.dart';
 import 'package:newagahi/screens/home/home_controller.dart';
 import 'package:newagahi/screens/search/search_controller.dart';
 import 'package:newagahi/screens/state/state_controller.dart';
@@ -28,7 +29,6 @@ class SearchPage extends StatelessWidget {
         titleSpacing: 10,
         centerTitle: true,
         title: TextField(
-          // autofocus: true,
           cursorColor: primaryColor,
           maxLines: 1,
           decoration: InputDecoration(
@@ -53,112 +53,11 @@ class SearchPage extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
               ),
             ),
-            // suffix: Container(
-            //   color: Colors.red,
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       Get.to(const SelectStatePage(),
-            //           binding: MyBinding(), arguments: 1);
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       children: [
-            //         Obx(
-            //           () => Text(
-            //             Get.find<SearchController>().cityName.value == ''
-            //                 ? 'همه شهر ها'
-            //                 : Get.find<SearchController>().cityName.value,
-            //           ),
-            //         ),
-            //         const SizedBox(
-            //           width: 5,
-            //         ),
-            //         const Icon(
-            //           Icons.location_on_outlined,
-            //           color: Colors.grey,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ),
           onChanged: (String value) {
-            // controller.search.value = value;
             controller.query['search'] = value;
-            // Get.find<SearchController>().getFiltredAds();
           },
         ),
-        // Container(
-        //   padding: const EdgeInsets.all(4),
-        //   width: Get.width,
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     border: Border.all(color: Colors.grey.withOpacity(0.5)),
-        //     borderRadius: BorderRadius.circular(10),
-        //   ),
-        //   child: IntrinsicHeight(
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.center,
-        //           crossAxisAlignment: CrossAxisAlignment.center,
-        //           children: const [
-        //             Icon(
-        //               Icons.search,
-        //               color: Colors.grey,
-        //             ),
-        //             SizedBox(
-        //               width: 10,
-        //             ),
-        //             TextField(
-        //               // Get.find<HomeController>().list.length.toString(),
-        //               decoration: InputDecoration(
-        //                 hintText: 'جستجو در همه آگهی ها',
-        //               ),
-        //               style: TextStyle(
-        //                 color: Colors.grey,
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //         const Spacer(),
-        //         VerticalDivider(
-        //           width: 20,
-        //           thickness: 1,
-        //           color: Colors.grey.withOpacity(0.5),
-        //         ),
-        //         GestureDetector(
-        //           onTap: () {
-        //             Get.to(const SelectStatePage(),
-        //                 binding: MyBinding(), arguments: 1);
-        //           },
-        //           child: Row(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             crossAxisAlignment: CrossAxisAlignment.center,
-        //             children: [
-        //               Obx(
-        //                 () => Text(
-        //                   Get.find<SearchController>().cityName.value == ''
-        //                       ? 'همه شهر ها'
-        //                       : Get.find<SearchController>().cityName.value,
-        //                 ),
-        //               ),
-        //               const SizedBox(
-        //                 width: 5,
-        //               ),
-        //               const Icon(
-        //                 Icons.location_on_outlined,
-        //                 color: Colors.grey,
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
         bottom: PreferredSize(
           preferredSize: Size(
             Get.width,
@@ -172,20 +71,14 @@ class SearchPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Obx(
-                  // () => Text(controller.subCategoryName.value),
-                  // () => Text(
-                  // Get.find<SubCategoryController>().name.toString(),
-                  // ),
-                  // ),
-                  // Category*
+                  // Category
                   GestureDetector(
                     child: Chip(
                       label: Obx(
                         () => Text(
                           controller.query['subCategoryId'] == '0' ||
                                   controller.query['subCategoryId'] == ''
-                              ? 'دسته بندی'
+                              ? 'انتخاب دسته بندی'
                               : controller.subCategoryName,
                           style: TextStyle(
                             color: primaryColor,
@@ -202,69 +95,70 @@ class SearchPage extends StatelessWidget {
                     onTap: () {
                       Get.back();
                       Get.back();
+                      Get.back();
+                      Get.find<DashbordController>().tabIndex.value = 1;
                     },
                   ),
                   const SizedBox(
                     width: 5,
                   ),
-                  //State*
-                  // GestureDetector(
-                  //   child: Chip(
-                  //     label: Obx(
-                  //       () => Text(
-                  //         Get.find<StateController>().stateName.value == '0' ||
-                  //                 Get.find<StateController>().stateName.value ==
-                  //                     ''
-                  //             ? 'انتخاب استان'
-                  //             : Get.find<StateController>().stateName.value,
-                  //         style: TextStyle(
-                  //           color: primaryColor,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     onDeleted: () {
-                  //       controller.query['stateId'] = ' ';
-                  //       Get.find<StateController>().stateName.value = '';
-                  //     },
-                  //     backgroundColor: primaryColor.withOpacity(0.2),
-                  //     side: BorderSide(color: primaryColor),
-                  //   ),
-                  //   onTap: () {
-                  //     Get.to(
-                  //       () => const SelectStatePage(),
-                  //       binding: MyBinding(),
-                  //     );
-                  //   },
-                  // ),
+
+                  //State
+                  GestureDetector(
+                    child: Chip(
+                      label: Obx(
+                        () => Text(
+                          controller.query['stateId'].toString() == '0' ||
+                                  controller.query['stateId'].toString() == ''
+                              ? 'انتخاب استان'
+                              : controller.stateName,
+                          style: TextStyle(
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                      onDeleted: () {
+                        controller.query['stateId'] = '0';
+                      },
+                      backgroundColor: primaryColor.withOpacity(0.2),
+                      side: BorderSide(color: primaryColor),
+                    ),
+                    onTap: () {
+                      Get.back();
+                      Get.back();
+                      Get.back();
+                      Get.find<DashbordController>().tabIndex.value = 3;
+                    },
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
-                  //City*
-                  // GestureDetector(
-                  //   child: Chip(
-                  //     label: Obx(() => Text(
-                  //           controller.query['cityId'] == '0' ||
-                  //                   controller.query['cityId'] == ''
-                  //               ? 'انتخاب شهر'
-                  //               : Get.find<CityController>().cityName.value,
-                  //           style: TextStyle(
-                  //             color: primaryColor,
-                  //           ),
-                  //         )),
-                  //     onDeleted: () {
-                  //       controller.query['cityId'] = '0';
-                  //       // Get.find<CityController>().cityName.value = '';
-                  //     },
-                  //     backgroundColor: primaryColor.withOpacity(0.2),
-                  //     side: BorderSide(color: primaryColor),
-                  //   ),
-                  //   onTap: () {
-                  //     Get.to(
-                  //       () => const SelectStatePage(),
-                  //       binding: MyBinding(),
-                  //     );
-                  //   },
-                  // ),
+
+                  //City
+                  GestureDetector(
+                    child: Chip(
+                      label: Obx(() => Text(
+                            controller.query['cityId'].toString() == '0' ||
+                                    controller.query['cityId'].toString() == ''
+                                ? 'انتخاب شهر'
+                                : controller.cityName,
+                            style: TextStyle(
+                              color: primaryColor,
+                            ),
+                          )),
+                      onDeleted: () {
+                        controller.query['cityId'] = '0';
+                      },
+                      backgroundColor: primaryColor.withOpacity(0.2),
+                      side: BorderSide(color: primaryColor),
+                    ),
+                    onTap: () {
+                      Get.back();
+                      Get.back();
+                      Get.back();
+                      Get.find<DashbordController>().tabIndex.value = 3;
+                    },
+                  ),
                 ],
               ),
             ),
@@ -282,7 +176,12 @@ class SearchPage extends StatelessWidget {
                   ),
                 )
               : controller.searchData!.data!.isEmpty
-                  ? const Text('موردی یافت نشد')
+                  ? const Text(
+                      'موردی یافت نشد',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    )
                   : ListView.separated(
                       // controller: controller,
                       itemCount: controller.searchData!.data!.length,

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:newagahi/constans.dart';
+import 'package:newagahi/screens/ads_register/ads_register_controller.dart';
 import 'package:newagahi/screens/city/select_city_page.dart';
 import 'package:newagahi/screens/search/search_controller.dart';
 import 'state_controller.dart';
 import '../../bindings/my_binding.dart';
 
 class SelectStatePage extends StatelessWidget {
-  const SelectStatePage({super.key});
-
+  SelectStatePage({super.key});
+  var controller = Get.put(StateController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,6 @@ class SelectStatePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'انتخاب استان',
-          // Get.arguments.toString(),
         ),
       ),
       body: Center(
@@ -34,39 +34,28 @@ class SelectStatePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () {
-                      // Get.find<StateController>().stateId.value =
-                      //     Get.find<StateController>()
-                      //             .stateData!
-                      //             .data![index]
-                      //             .id ??
-                      //         0;
+                      if (Get.find<StateController>().args == 'false') {
+                        Get.find<AdsRegisterController>().stateId.value =
+                            Get.find<StateController>()
+                                    .stateData!
+                                    .data![index]
+                                    .id ??
+                                0;
+                      }
 
-                      // Get.find<StateController>().stateId.value =
-                      //     Get.find<StateController>()
-                      //             .stateData!
-                      //             .data![index]
-                      //             .id ??
-                      //         0;
-
-                      Get.find<SearchController>().query['stateId'] =
+                      Get.to(
+                        () => const SelectCityPage(),
+                        arguments: [
+                          Get.find<StateController>().args.toString(),
                           Get.find<StateController>()
                               .stateData!
                               .data![index]
-                              .id
-                              .toString();
-
-                      Get.find<StateController>().stateName.value =
+                              .id,
                           Get.find<StateController>()
-                                  .stateData!
-                                  .data![index]
-                                  .stateName ??
-                              '';
-                      Get.to(
-                        () => const SelectCityPage(),
-                        arguments: Get.find<StateController>()
-                            .stateData!
-                            .data![index]
-                            .id,
+                              .stateData!
+                              .data![index]
+                              .stateName,
+                        ],
                         binding: MyBinding(),
                       );
                     },

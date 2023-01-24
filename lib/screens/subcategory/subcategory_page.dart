@@ -90,7 +90,11 @@ class SubCategory extends StatelessWidget {
                                         .subCategoriesData!
                                         .data![index]
                                         .name ??
-                                    ''
+                                    '',
+                                '',
+                                '',
+                                '',
+                                '',
                               ],
                               binding: MyBinding(),
                             );

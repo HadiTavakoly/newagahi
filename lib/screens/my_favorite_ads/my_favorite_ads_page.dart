@@ -35,7 +35,7 @@ class MyFavoriteAdsPage extends GetView<MyFavoriteAdsController> {
                 )
               : controller.myFavoriteAdsData!.data!.isEmpty
                   ? const Text(
-                    'شما آگهی ای ندارید',
+                    'شما آگهی محبوبی ندارید',
                     style: TextStyle(
                       fontSize: 20,
                     ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:newagahi/bindings/my_binding.dart';
 import 'package:newagahi/constans.dart';
 import 'package:newagahi/screens/home/home_controller.dart';
+import 'package:newagahi/screens/search/search_page.dart';
 import 'package:newagahi/screens/state/state_controller.dart';
 import '../ads_register/ads_register_controller.dart';
 import '../search/search_controller.dart';
@@ -16,8 +18,12 @@ class SelectCityPage extends GetView<CityController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'انتخاب شهر',
+          // controller.flag.toString(),
+          // controller.id.toString(),
+          // controller.cityId.toString(),
+          // controller.cityName.value.toString(),
         ),
       ),
       body: Center(
@@ -44,17 +50,28 @@ class SelectCityPage extends GetView<CityController> {
                             .toString(),
                       ),
                       onTap: () {
-                        // Get.find<HomeController>().cityName.value
-                        Get.find<CityController>().cityName.value =
-                            controller.cityData!.data![index].cityName ?? '';
+                        if (controller.flag.toString() == 'false') {
+                          Get.find<AdsRegisterController>().cityId.value =
+                              controller.cityData!.data![index].id ?? 3;
+                          Get.find<AdsRegisterController>().cityName.value =
+                              controller.cityData!.data![index].cityName ?? '';
 
-                        Get.find<CityController>().cityId.value =
-                            controller.cityData!.data![index].id ?? 0;
-                        Get.find<SearchController>().query['cityId'] =
-                            controller.cityData!.data![index].id.toString();
-
-                        Get.back();
-                        Get.back();
+                          Get.back();
+                          Get.back();
+                        } else {
+                          Get.to(
+                            () => SearchPage(),
+                            arguments: [
+                              '',
+                              '',
+                              controller.stateId.toString(),
+                              controller.stateName.toString(),
+                              controller.cityData!.data![index].id ?? 3,
+                              controller.cityData!.data![index].cityName ?? ''
+                            ],
+                            binding: MyBinding(),
+                          );
+                        }
                       },
                     );
                   },

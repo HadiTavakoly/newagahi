@@ -5,19 +5,16 @@ import 'package:http/http.dart' as http;
 
 class CityController extends GetxController {
   City? cityData;
-  var id = Get.arguments??3;
+  var flag = Get.arguments[0].toString();
+  var stateId = Get.arguments[1] ?? 3;
+  var stateName = Get.arguments[2] ?? '';
   var isDataLoading = false.obs;
-  var cityName = ''.obs;
-  var cityId = 0.obs;
-
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    getCity(id);
+    getCity(stateId);
   }
-
-
 
   getCity(int id) async {
     try {

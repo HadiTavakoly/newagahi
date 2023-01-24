@@ -8,21 +8,17 @@ import '../../models/ads_model.dart';
 
 class SearchController extends GetxController {
   Ads? searchData;
-  // var categoryId = 0.obs;
-  // var categoryName = ''.obs;
-  var subCategoryName = Get.arguments[1].toString();
   var isDataLoading = false.obs;
-  // RxList<Datum> list = <Datum>[].obs;
-  // ScrollController controller = ScrollController();
-  // var search = ''.obs;
-
+  var page = 1;
+  var subCategoryName = Get.arguments?[1] ?? '';
+  var stateName = Get.arguments?[3]??'';
+  var cityName = Get.arguments?[5]??'';
   RxMap query = {
     'search': '',
-    'subCategoryId': Get.arguments[0].toString(),
-    'stateId': '',
-    'cityId': '',
+    'subCategoryId': Get.arguments?[0] ?? '',
+    'stateId': Get.arguments?[2]??0,
+    'cityId': Get.arguments?[4] ?? 0,
   }.obs;
-  var page = 1;
 
   @override
   void onInit() {
@@ -43,8 +39,8 @@ class SearchController extends GetxController {
       'page': '$page',
       'search': q['search'],
       'category_id': q['subCategoryId'],
-      // 'state_id': q['stateId'],
-      // 'city_id': q['cityId'],
+      'state_id': q['stateId'].toString(),
+      'city_id': q['cityId'].toString(),
     };
     try {
       isDataLoading(true);

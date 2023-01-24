@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:newagahi/screens/state/select_state_page.dart';
 import 'dashbord_controller.dart';
 import '../home/home_page.dart';
 import '../category/category_page.dart';
@@ -22,11 +23,12 @@ class DashbordPage extends GetView<DashbordController> {
                 index: controller.tabIndex.value,
                 children: [
                   const HomePage(),
-                    CategoryPage(),
+                  CategoryPage(),
                   Get.find<AuthController>().isLogged.value
-                      ?    AdsRegisterPage()
+                      ? AdsRegisterPage()
                       : const LoginPage(),
-                  const PlanPage(),
+                  // const PlanPage(),
+                  SelectStatePage(),
                   const ProfilePage(),
                 ],
               ),
@@ -45,8 +47,8 @@ class DashbordPage extends GetView<DashbordController> {
                 _bottomNavigationBarItem(Icons.note, 'آگهی ها'),
                 _bottomNavigationBarItem(Icons.list, 'دسته ها'),
                 _bottomNavigationBarItem(Icons.add_circle, 'ثبت آگهی'),
-                _bottomNavigationBarItem(Icons.chat, 'چت'),
-                _bottomNavigationBarItem(Icons.person, 'دیوار من'),
+                _bottomNavigationBarItem(Icons.location_on, 'شهر ها'),
+                _bottomNavigationBarItem(Icons.person, 'پروفایل'),
               ],
             ),
           )),
