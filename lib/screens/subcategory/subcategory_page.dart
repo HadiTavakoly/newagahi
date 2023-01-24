@@ -72,23 +72,24 @@ class SubCategory extends StatelessWidget {
                                   .name ??
                               '';
 
-                          // Get.find<SearchController>().subCategoryName.value =
-                          //     Get.find<SubCategoryController>()
-                          //             .subCategoriesData!
-                          //             .data![index]
-                          //             .name ??
-                          //         '';
+                          Get.find<SearchController>().subCategoryName.value =
+                              Get.find<SubCategoryController>()
+                                      .subCategoriesData!
+                                      .data![index]
+                                      .name ??
+                                  '';
 
-                          // Get.find<SearchController>().query['subCategoryId'] =
-                          //     Get.find<SubCategoryController>()
-                          //         .subCategoriesData!
-                          //         .data![index]
-                          //         .id
-                          //         .toString();
-                          // Get.to(
-                          //   () => SearchPage(),
-                          //   binding: MyBinding(),
-                          // );
+                          Get.find<SearchController>().query['subCategoryId'] =
+                              Get.find<SubCategoryController>()
+                                  .subCategoriesData!
+                                  .data![index]
+                                  .id
+                                  .toString();
+                          Get.to(
+                            () => SearchPage(),
+                            //  arguments: '130',
+                            // binding: MyBinding(),
+                          );
                           // Get.back();
                           // Get.back();
                         },

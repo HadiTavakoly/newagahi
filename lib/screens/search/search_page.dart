@@ -16,9 +16,9 @@ import '../subcategory/subcategory_page.dart';
 import '../state/select_state_page.dart';
 import '../../constans.dart';
 
-class SearchPage extends GetView<SearchController> {
-  const SearchPage({super.key});
-
+class SearchPage extends StatelessWidget {
+   SearchPage({super.key});
+  var controller = Get.find<SearchController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -172,11 +172,11 @@ class SearchPage extends GetView<SearchController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Obx(
-                  // () => Text(controller.query['subCategoryId']),
+                  Obx(
+                  () => Text(controller.subCategoryName.value),
                   // () => Text(
                   // Get.find<SubCategoryController>().name.toString(),
-                  // ),
+                  ),
                   // ),
                   // Category*
                   // GestureDetector(
