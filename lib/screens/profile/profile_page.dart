@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
               () => Get.find<AuthController>().isLogged.value
                   ? cell(
                       'تعرفه ها',
-                      Icons.money,
+                      Icons.attach_money,
                       () {
                         Get.to(
                           () => const PlanPage(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import './register_controller.dart';
 
 class RegisterPage extends GetView<RegisterController> {

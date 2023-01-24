@@ -6,7 +6,7 @@ import 'package:newagahi/models/auth_model.dart';
 import 'package:newagahi/screens/dashbord/auth_controller.dart';
 
 class LoginController extends GetxController with CacheManager {
-  Auth? stateData;
+  Auth? loginData;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var obscure = true.obs;
@@ -27,11 +27,11 @@ class LoginController extends GetxController with CacheManager {
       );
 
       if (response.statusCode == 200) {
-        stateData = Auth.fromJson(jsonDecode(response.body));
+        loginData = Auth.fromJson(jsonDecode(response.body));
 
-        if (stateData!.code == 1) {
-          var token = stateData!.data![0].apiToken;
-          var tel = stateData!.data![0].tel;
+        if (loginData!.code == 1) {
+          var token = loginData!.data![0].apiToken;
+          var tel = loginData!.data![0].tel;
           await saveToken(token);
           await saveTel(tel);
           usernameController.clear();
@@ -40,7 +40,7 @@ class LoginController extends GetxController with CacheManager {
             token,
           );
           Get.back();
-        } else if (stateData!.code == 0) {
+        } else if (loginData!.code == 0) {
           throw jsonDecode(response.body)['message'];
         }
       } else {

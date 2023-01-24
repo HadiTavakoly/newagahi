@@ -1,42 +1,85 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newagahi/screens/dashbord/auth_controller.dart';
-import '../../models/ads_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class SettingController extends GetxController {
-  Ads? myFavoriteAdsData;
   var isDataLoading = false.obs;
-  Map<String, String> queryParameters = {
-    'api_token': Get.find<AuthController>().getToken().toString(),
-  };
+  var res;
+  var oldPassword = TextEditingController();
+  var newPassword = TextEditingController();
+  var newPasswordConfirmation = TextEditingController();
 
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    getMyFavoriteAds();
-  }
-
-  getMyFavoriteAds() async {
+  Future<void> changePassword() async {
     try {
-      isDataLoading(true);
-      var respons = await http.get(
+      Map<String, String> queryParameters = {
+        'api_token': Get.find<AuthController>().getToken().toString(),
+        'old': oldPassword.text,
+        'password': newPassword.text,
+        'password_confirmation': newPasswordConfirmation.text,
+      };
+      var response = await http.post(
         Uri.https(
           'newagahi.ir',
-          'api/v1/panel/ads/favorites',
+          'api/v1/panel/profile/changePassword',
           queryParameters,
         ),
       );
-      if (respons.statusCode == 200) {
-        myFavoriteAdsData = Ads.fromJson(jsonDecode(respons.body));
+
+      if (response.statusCode == 200) {
+        res = jsonDecode(response.body);
+        if (res['code'] == 1) {
+          throw 1;
+        } else if (res['code'] == 0) {
+          throw res['message'];
+        }
       } else {
-        isDataLoading(false);
-        throw Exception('Fail to load my favorite ads');
+        throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
       }
-    } catch (e) {
-      throw Exception('Error : $e');
-    } finally {
-      isDataLoading(false);
+    } catch (error) {
+      if (error.toString() == '1') {
+        Get.back();
+        Get.snackbar(
+          '',
+          '',
+          titleText: const Text(
+            'پیام',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+          messageText: Text(
+            res['message'],
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.green.shade400,
+              fontSize: 17,
+            ),
+          ),
+        );
+      } else {
+        Get.snackbar(
+          '',
+          '',
+          titleText: const Text(
+            'خطا',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+          messageText: Text(
+            error.toString(),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xffC42127),
+              fontSize: 17,
+            ),
+          ),
+        );
+      }
     }
   }
 }

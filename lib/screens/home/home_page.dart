@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Get.to(
-                       SelectStatePage(),
+                      SelectStatePage(),
                       binding: MyBinding(),
                     );
                   },
@@ -86,7 +86,7 @@ class HomePage extends StatelessWidget {
                       Obx(
                         () => Text(
                           Get.find<HomeController>().cityName.value == ''
-                              ? 'همه شهر ها'
+                              ? 'شهر ها'
                               : Get.find<HomeController>().cityName.value,
                         ),
                       ),
@@ -112,11 +112,11 @@ class HomePage extends StatelessWidget {
             child: Obx(
               () {
                 return Get.find<CategoryController>().isDataLoading.value
-                    ? const Center(
+                    ?  Center(
                         child: SpinKitThreeBounce(
                           size: 25,
-                          color: Color(0xffC42127),
-                          duration: Duration(
+                          color: primaryColor,
+                          duration: const Duration(
                             seconds: 1,
                           ),
                         ),
