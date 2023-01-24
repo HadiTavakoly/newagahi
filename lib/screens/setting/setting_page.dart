@@ -63,80 +63,91 @@ class ChangePasswordPage extends GetView<SettingController> {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'برای تغییر رمز عبور خود ، فیلد های زیر را با دقت تکمیل نمایید.',
-                  style: TextStyle(
-                    fontSize: 20,
-                    // color: Colors.grey,
-                  ),
-                  // textAlign: TextAlign.justify,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                  style: const TextStyle(fontSize: 20),
-                  cursorColor: primaryColor,
-                  controller: controller.oldPassword,
-                  decoration: const InputDecoration(
-                    labelText: 'رمزعبور قبلی',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  style: const TextStyle(fontSize: 20),
-                  cursorColor: primaryColor,
-                  controller: controller.newPassword,
-                  // ignore: prefer_const_constructors
-                  decoration: InputDecoration(
-                    labelText: 'رمزعبور جدید',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  style: const TextStyle(fontSize: 20),
-                  cursorColor: primaryColor,
-                  controller: controller.newPasswordConfirmation,
-                  decoration: const InputDecoration(
-                    labelText: 'تکرار رمزعبور',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10, top: 10),
-                  width: Get.width,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(10),
-                      backgroundColor: primaryColor,
-                      elevation: 0,
+          child: Obx(
+            () => controller.isDataLoading.value
+                ? SpinKitThreeBounce(
+                    size: 25,
+                    color: primaryColor,
+                    duration: const Duration(
+                      seconds: 1,
                     ),
-                    onPressed: () {
-                      controller.changePassword();
-                    },
-                    child: const Text(
-                      'به روز رسانی رمز عبور',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'برای تغییر رمز عبور خود ، فیلد های زیر را با دقت تکمیل نمایید.',
+                          style: TextStyle(
+                            fontSize: 20,
+                            // color: Colors.grey,
+                          ),
+                          // textAlign: TextAlign.justify,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        TextField(
+                          style: const TextStyle(fontSize: 20),
+                          cursorColor: primaryColor,
+                          controller: controller.oldPassword,
+                          decoration: const InputDecoration(
+                            labelText: 'رمزعبور قبلی',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextField(
+                          style: const TextStyle(fontSize: 20),
+                          cursorColor: primaryColor,
+                          controller: controller.newPassword,
+                          // ignore: prefer_const_constructors
+                          decoration: InputDecoration(
+                            labelText: 'رمزعبور جدید',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextField(
+                          style: const TextStyle(fontSize: 20),
+                          cursorColor: primaryColor,
+                          controller: controller.newPasswordConfirmation,
+                          decoration: const InputDecoration(
+                            labelText: 'تکرار رمزعبور',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 10, top: 10),
+                          width: Get.width,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(10),
+                              backgroundColor: primaryColor,
+                              elevation: 0,
+                            ),
+                            onPressed: () {
+                              controller.changePassword();
+                            },
+                            child: const Text(
+                              'به روز رسانی رمز عبور',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ),

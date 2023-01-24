@@ -11,7 +11,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MyAdsPage extends GetView<MyAdsController> {
   const MyAdsPage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class MyAdsPage extends GetView<MyAdsController> {
       body: Center(
         child: Obx(
           () => controller.isDataLoading.value
-              ?  SpinKitThreeBounce(
+              ? SpinKitThreeBounce(
                   size: 25,
                   color: primaryColor,
                   duration: const Duration(
@@ -42,7 +42,7 @@ class MyAdsPage extends GetView<MyAdsController> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.to(() => RegisterPage());
+                            Get.to(() => const RegisterPage());
                           },
                           child: Text(
                             'برای ثبت آگهی جدید کلیک کنید',
@@ -127,7 +127,7 @@ class MyAdsPage extends GetView<MyAdsController> {
                                               ),
                                             ),
                                             Text(
-                                              '${controller.myAdsData!.data![index].updatedAt} در ${controller.myAdsData!.data![index].state}',
+                                              '${controller.myAdsData!.data![index].updatedAt} در ${controller.myAdsData!.data![index].city}',
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -171,34 +171,85 @@ class MyAdsPage extends GetView<MyAdsController> {
                                   ),
                                 ),
                                 const SizedBox(
-                                  height: 20,
+                                  height: 10,
                                 ),
-                                GestureDetector(
-                                  onTap: () async {
-                                    var sendData =
-                                        controller.myAdsData!.data![index];
-                                    Get.delete<AdsRegisterController>();
-                                    await Get.to(
-                                      () =>  AdsRegisterPage(),
-                                      arguments: [
-                                        'edit',
-                                        sendData.title,
-                                        sendData.description,
-                                        sendData.id,
-                                        sendData.price,
-                                        sendData.owner!.name,
-                                        sendData.owner!.phone,
-                                        sendData.owner!.address,
-                                        sendData.owner!.email,
-                                      ],
-                                      binding: MyBinding(),
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.edit_outlined,
-                                    size: 30,
-                                    color: primaryColor,
-                                  ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width / 4,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.all(10),
+                                          backgroundColor:
+                                              const Color(0xffC42127),
+                                          elevation: 0,
+                                        ),
+                                        onPressed: () async {
+                                          var sendData = controller
+                                              .myAdsData!.data![index];
+                                          Get.delete<AdsRegisterController>();
+                                          await Get.to(
+                                            () => AdsRegisterPage(),
+                                            arguments: [
+                                              'edit',
+                                              sendData.title,
+                                              sendData.description,
+                                              sendData.id,
+                                              sendData.price,
+                                              sendData.owner!.name,
+                                              sendData.owner!.phone,
+                                              sendData.owner!.address,
+                                              sendData.owner!.email,
+                                            ],
+                                            binding: MyBinding(),
+                                          );
+                                        },
+                                        child: const Icon(
+                                          Icons.edit_outlined,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width / 4,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.all(10),
+                                          backgroundColor:
+                                              const Color(0xffC42127),
+                                          elevation: 0,
+                                        ),
+                                        onPressed: () {
+                                          controller.refreshMyAdsById(
+                                            controller
+                                                .myAdsData!.data![index].id,
+                                          );
+                                        },
+                                        child: const Icon(
+                                          Icons.refresh,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width / 4,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.all(10),
+                                          backgroundColor: Colors.grey[200],
+                                          elevation: 0,
+                                        ),
+                                        onPressed: () {},
+                                        child: Icon(
+                                          Icons.block,
+                                          color: primaryColor,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

@@ -13,6 +13,7 @@ class SettingController extends GetxController {
 
   Future<void> changePassword() async {
     try {
+      isDataLoading(true);
       Map<String, String> queryParameters = {
         'api_token': Get.find<AuthController>().getToken().toString(),
         'old': oldPassword.text,
@@ -32,6 +33,7 @@ class SettingController extends GetxController {
         if (res['code'] == 1) {
           throw 1;
         } else if (res['code'] == 0) {
+          isDataLoading(false);
           throw res['message'];
         }
       } else {
@@ -80,6 +82,9 @@ class SettingController extends GetxController {
           ),
         );
       }
+    }
+    finally{
+      isDataLoading(false);
     }
   }
 }

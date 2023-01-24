@@ -41,26 +41,37 @@ class AdsRegisterPage extends StatelessWidget {
         title: Text(
           Get.arguments?[0] != 'edit' ? 'ثبت آگهی' : 'ویرایش آگهی',
         ),
-        leading: GestureDetector(
-          onTap: () {
-            Get.find<DashbordController>().tabIndex.value = 0;
-          },
-          child: const Icon(
-            Icons.close_outlined,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GestureDetector(
-              child: const Icon(
-                Icons.refresh,
+        leading: Get.arguments?[0] != 'edit'
+            ? GestureDetector(
+                onTap: () {
+                  Get.find<DashbordController>().tabIndex.value = 0;
+                },
+                child: const Icon(
+                  Icons.close_outlined,
+                ),
+              )
+            : GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: const Icon(
+                  Icons.arrow_back,
+                ),
               ),
-              onTap: () {
-                refresh();
-              },
-            ),
-          ),
+        actions: [
+          Get.arguments?[0] != 'edit'
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    child: const Icon(
+                      Icons.refresh,
+                    ),
+                    onTap: () {
+                      refresh();
+                    },
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
       body: Obx(
@@ -119,7 +130,7 @@ class AdsRegisterPage extends StatelessWidget {
                           onTap: () {
                             Get.delete<StateController>();
                             Get.to(
-                              () =>  SelectStatePage(),
+                              () => SelectStatePage(),
                               binding: MyBinding(),
                               arguments: 'false',
                             );
